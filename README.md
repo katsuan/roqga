@@ -92,7 +92,7 @@
   - record.js 録画と保存の画面 ／ editor.js 撮った動画に（得点板をつける） ／ render.js 書き出し・⚡ ハイライト
 - js/core.js・js/main.js：前の名前のファイル。前の index.html を覚えているブラウザ（LINE の中など）のために、新しいファイル（page.js・store.js／app.js）を読むだけ。**2026-11-25 ごろに消す**
 - tools/icon.py：アイコン・ロゴ・OGP（おくるんの tools/brandkit.py を使う。さくせん盤と同じピッチの緑に、Q はカメラのレンズの輪と録画中の赤いランプ）。tools/logo_ro.py：横ロゴの「Ro」（R の足が o のボールを蹴る）
-- 公開前に `python3 ../q-oqrn/tools/qstamp.py index.html`（読み込む CSS・JS に版の番号）
+- 公開は GitHub Actions（`.github/workflows/pages.yml`。中身は Q 共通の line-share の `q-pages.yml`）。push すると、テストと check-code が通ったときだけ Pages に出す。読みこむ JS・CSS の `?v=` は公開のときに付くので、手で付けなくてよい
 - おくるんの一覧（line-share の data/hub-links.json の `key: "roqga"`）に載っている。はじめの画面のいちばん下に「📤 ろくがを紹介する」と仲間のアイコン列（line-share の shared/tool-share.js）
 
 ## ローカルでの確認
