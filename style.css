@@ -46,10 +46,9 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .teams.is-swapped .team-col[data-side="them"] { order: 1; }
 .mid { display: grid; grid-template-rows: 18px 44px; align-content: start; gap: 8px; justify-items: center; align-items: center; } /* 1段目はラベルの高さ（⇄）、2段目はチーム名の高さ（スコア） */
 .mid-score { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.swap { width: 30px; height: 30px; padding: 0; border: 2px solid var(--border); border-radius: 50%; background: var(--card); color: var(--ink); font: inherit; font-size: 14px; font-weight: 800; line-height: 1; cursor: pointer; }
+.swap { width: 30px; height: 30px; padding: 0; border: 2px solid var(--border); border-radius: 50%; background: var(--card); color: var(--ink); font: inherit; font-size: 14px; font-weight: 800; line-height: 1; cursor: pointer; position: relative; }
 .swap:active { transform: scale(0.94); }
 /* 見た目は 30px の丸のまま、押せるところは 44px に */
-.swap { position: relative; }
 .swap::after { content: ""; position: absolute; inset: -7px; }
 /* 撮る画面の ＋1 も左右を入れかえる */
 /* たたんだ欄（プレビュー・GOAL のエフェクト） */
@@ -98,7 +97,6 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .palette-item { display: grid; place-items: center; min-width: 0; min-height: 36px; padding: 0; border: 0; background: none; cursor: pointer; -webkit-appearance: none; appearance: none; }
 .palette-item .swatch { width: min(26px, calc(100% - 8px)); height: auto; aspect-ratio: 1; }
 .palette-item[aria-pressed="true"] .swatch { box-shadow: 0 0 0 2px var(--ls-accent-soft), 0 0 0 4px var(--accent); }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 /* ボタンは Q キット（ls-button）。押しやすいよう大きめ */
 .ls-button.is-block { min-height: 52px; font-size: 17px; font-weight: 800; }
 .mid-score { cursor: pointer; border-radius: 8px; padding: 0 4px; }
@@ -118,20 +116,17 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .link { border: 0; background: none; color: var(--ink-soft); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
 
 /* 撮る画面：画面いっぱいに、カメラ＋得点板の絵（録画されるもの）。その上にボタン */
-.studio { position: fixed; inset: 0; background: #000; overflow: hidden; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.studio { position: fixed; inset: 0; background: #000; overflow: hidden; touch-action: manipulation; user-select: none; -webkit-user-select: none; --side-gap: 64px; --anchor: 50%; --side-bottom: calc(16px + env(safe-area-inset-bottom)); --stack-pad: calc(20px + max(env(safe-area-inset-left), env(safe-area-inset-right))); --rec-pad: calc(24px + max(env(safe-area-inset-left), env(safe-area-inset-right))); }
 .screen { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
-.side { position: absolute; bottom: calc(16px + env(safe-area-inset-bottom)); display: grid; justify-items: center; gap: 8px; }
+.side { position: absolute; bottom: var(--side-bottom); display: grid; justify-items: center; gap: 8px; }
 /* ＋1／−1 は、画面のはしからではなく、まんなかの録画ボタンからの距離で置く（画面の長さがちがう端末でも、
    いつも同じ場所・親指の届くところに。はしの丸みやノッチにもかからない）。左右の入れかえ・倒したときも同じ */
 .side.is-us, .studio.is-swapped .side.is-them { left: auto; right: calc(100% - var(--anchor) + var(--side-gap)); }
 .side.is-them, .studio.is-swapped .side.is-us { right: auto; left: calc(var(--anchor) + var(--side-gap)); }
-.studio { --side-gap: 64px; }
 /* 片手で使えるように、左よせ・右よせ（右上で切りかえ。録画中もできる）。
    寄せたときは ＋1 を縦に2段（上が得点板の左のチーム、下が右のチーム。どちらかはボタンの色＝チームの色で見分ける）。
    −1 は ＋1 の内側。録画ボタンは反対側のはしへ（下の .bar） */
-.studio { --anchor: 50%; --side-bottom: calc(16px + env(safe-area-inset-bottom)); --stack-pad: calc(20px + max(env(safe-area-inset-left), env(safe-area-inset-right))); }
-.studio.is-turned { --side-bottom: 24px; --stack-pad: calc(32px + max(env(safe-area-inset-top), env(safe-area-inset-bottom))); }
-.side { bottom: var(--side-bottom); }
+.studio.is-turned { --side-bottom: 24px; --stack-pad: calc(32px + max(env(safe-area-inset-top), env(safe-area-inset-bottom))); --rec-pad: calc(36px + max(env(safe-area-inset-top), env(safe-area-inset-bottom))); }
 .studio.hand-left .side, .studio.hand-right .side { grid-auto-flow: column; align-items: center; }
 .studio.hand-left .side.is-us, .studio.hand-left .side.is-them { right: auto; left: var(--stack-pad); }
 .studio.hand-right .side.is-us, .studio.hand-right .side.is-them { left: auto; right: var(--stack-pad); }
@@ -152,8 +147,6 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 :root.no-board .without-board { display: list-item; }
 .bar { position: absolute; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom)); transform: translateX(-50%); }
 /* 左よせ・右よせのときは、録画ボタンを反対側のはしへ（＋1 を押す親指が当たらないように） */
-.studio { --rec-pad: calc(24px + max(env(safe-area-inset-left), env(safe-area-inset-right))); }
-.studio.is-turned { --rec-pad: calc(36px + max(env(safe-area-inset-top), env(safe-area-inset-bottom))); }
 .studio.hand-left .bar { left: auto; right: var(--rec-pad); transform: none; }
 .studio.hand-right .bar { left: var(--rec-pad); transform: none; }
 /* 右上のボタンは、映像の内側にそろえる（映像は縦横比のまま画面に収めるので、はしに黒い帯ができることがある。帯の上に置くと、丸が見えず点だけ浮いて見える）。
@@ -179,13 +172,12 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .turn-choices { display: flex; gap: 16px; }
 .turn-btn { display: grid; justify-items: center; gap: 8px; padding: 16px 16px; border: 2px solid rgba(255, 255, 255, 0.7); border-radius: 16px; background: rgba(255, 255, 255, 0.08); color: #fff; font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }
 /* 倒す向きの絵：横にしたスマホ */
-.phone { width: 44px; height: 24px; border: 3px solid #fff; border-radius: 6px; position: relative; }
+.phone { width: 44px; height: 24px; border: 3px solid #fff; border-radius: 6px; position: relative; margin: 8px 0; }
 .phone::after { content: ""; position: absolute; top: 50%; width: 3px; height: 8px; border-radius: 2px; background: #fff; transform: translateY(-50%); }
 .phone.is-left::after { right: 3px; }
 .phone.is-right::after { left: 3px; }
 /* 倒すアニメーション：縦に立ったスマホが、左（右）へ倒れて横向きになる。くり返す。
    ボタンの丸い印（::after）は、立っているときは下、倒れると左右のはし */
-.phone { margin: 8px 0; }
 .phone.is-left { animation: tilt-left 2.6s ease-in-out infinite; }
 .phone.is-right { animation: tilt-right 2.6s ease-in-out infinite; }
 @keyframes tilt-left { 0%, 25% { transform: rotate(90deg); } 55%, 100% { transform: rotate(0deg); } }
