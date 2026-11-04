@@ -66,9 +66,9 @@ const state = {
   goalFx: saved.fxV === 2 ? saved.goalFx !== false : true,
   niceFx: saved.niceFx !== false, // ⭐ ナイスのエフェクトを出すか（はじめは出す）
   fxV: 2,
-  // ⚡ ハイライトのつなぎ目の柄（draw.js の TRANSITIONS の id）。はじめは RoQga
+  // ハイライトのつなぎ目の柄（draw.js の TRANSITIONS の id）。はじめは RoQga
   transition: textOf(saved.transition, 40) ?? "roqga",
-  // 🔗 つなぐのつなぎ目の柄と「1/3」の札（はじめは どちらも入れない：作り直さずに並べるので、すぐ終わる）
+  // つなぐのつなぎ目の柄と「1/3」の札（はじめは どちらも入れない：作り直さずに並べるので、すぐ終わる）
   mergeTransition: textOf(saved.mergeTransition, 40) ?? "none",
   mergeBadge: saved.mergeBadge === true,
   // 得点板を出すか（出さないときは GOAL の演出・つなぎ目だけ）。プレビュー・撮る画面・撮った動画に・書き出す動画のすべてに効く。はじめは出す
@@ -77,7 +77,7 @@ const state = {
   fxCustom: textOf(saved.fxCustom, 16) ?? "", // カスタムのアイコン（好きな絵文字・文字。2文字まで）
   fxText: textOf(saved.fxText, 12) ?? "", // エフェクトの文字（空なら GOAL!）
   swapped: saved.swapped === true, // 左右を入れかえる（us を右に）。us・them は中の呼び名で、自分のチームとはかぎらない
-  // ⚡ ハイライトに入れる長さ：得点・⭐ を押した時間の何秒前から、何秒後まで（はじめは 10・6。1〜30。アプリ版と同じ）
+  // ハイライトに入れる長さ：得点・⭐ を押した時間の何秒前から、何秒後まで（はじめは 10・6。1〜30。アプリ版と同じ）
   hlBefore: hlSecondsOf(saved.hlBefore, 10),
   hlAfter: hlSecondsOf(saved.hlAfter, 6),
   split: saved.split === true,

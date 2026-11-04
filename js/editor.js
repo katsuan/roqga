@@ -17,7 +17,7 @@ let exportMode = false; // 書き出しの録画が終わったら、保存の�
 let audioCtx = null;
 let audioDest = null;
 let editRate = state.editRate; // 得点を入れるときの再生の速さ（端末に覚えておく。書き出しはいつも 1×）
-let exportRange = "all"; // 書き出す範囲：all（全部）／goals（⚡ ハイライト＝得点・⭐ の前後だけ）
+let exportRange = "all"; // 書き出す範囲：all（全部）／goals（ハイライト＝得点・⭐ の前後だけ）
 let modeChosen = true; // 新しく選んだ動画で、点の入れ方（見ながら記録／じっくり記録）を選んだか
 let quick = false; // 見ながら記録のあいだ
 
@@ -26,7 +26,7 @@ $("videoFile").addEventListener("change", (e) => {
   const file = e.target.files?.[0];
   e.target.value = ""; // 同じ動画をもう一度選べるように
   if (file) {
-    logUse("pick-video"); // 🎞 撮った動画にを使った
+    logUse("pick-video"); // 撮った動画にを使った
     openEditor(file);
   }
 });
@@ -56,7 +56,7 @@ async function openEditor(file) {
 
 // 撮った動画にの画面を出す（はじめて開くときも、さっきの動画にもどるときも）
 function showEditor() {
-  // 撮る画面の ⚡ ハイライトを作ると、この動画の枠に録った動画を入れているので、さっきの動画にもどす
+  // 撮る画面の ハイライトを作ると、この動画の枠に録った動画を入れているので、さっきの動画にもどす
   if (editUrl && editVideo.src !== editUrl) editVideo.src = editUrl;
   // 見る速さは、前に選んだまま（動画を入れかえると 1× にもどるため、開くたびに入れる）
   editVideo.playbackRate = editRate;
@@ -64,14 +64,14 @@ function showEditor() {
   showRate();
   renderEditScore(); // チーム名・色は、はじめの画面で変えているかもしれない
   renderEditEvents();
-  $("editFxBody").append($("fxControls")); // エフェクトの設定を、この画面の「🎉 得点のエフェクト」へ
+  $("editFxBody").append($("fxControls")); // エフェクトの設定を、この画面の「得点のエフェクト」へ
   showModePick();
   $("setup").hidden = true;
   $("editor").hidden = false;
   requestAnimationFrame(drawEditFrame);
 }
 
-// 「← 戻る」：選んだ動画と入れた点は消さずに残す（まちがえて押しても、はじめの画面の「🎞 さっきの動画にもどる」で続きから）
+// 「← 戻る」：選んだ動画と入れた点は消さずに残す（まちがえて押しても、はじめの画面の「さっきの動画にもどる」で続きから）
 function closeEditor() {
   if (exporting) return;
   document.activeElement?.blur?.();
@@ -90,7 +90,7 @@ function closeEditor() {
 }
 $("editBack").addEventListener("click", closeEditor);
 
-// はじめの画面の「🎞 さっきの動画にもどる」：撮った動画にのタブで、さっきの動画があるときだけ
+// はじめの画面の「さっきの動画にもどる」：撮った動画にのタブで、さっきの動画があるときだけ
 function showResume() {
   const later = document.querySelector('[data-mode="later"]')?.getAttribute("aria-selected") === "true";
   $("resumeEdit").hidden = !(editUrl && later);
@@ -225,7 +225,7 @@ function startFrameSync() {
   editVideo.requestVideoFrameCallback(onFrame);
 }
 
-// ⚡ ハイライトの書き出し中：つなぎ目の前後に柄（draw.js の drawTransition）。
+// ハイライトの書き出し中：つなぎ目の前後に柄（draw.js の drawTransition）。
 // いま出ている柄の動き（render.js の renderPieces が、切り出した部分が2つ以上のときだけ入れる）。null（出ていない）・{ hold: true }（画面をおおったまま）・
 // { dir: "in"（入ってくる）か "out"（抜けていく）, from: 始めた時刻, half: 秒 }。
 // 柄は動画の時間ではなく時計で動かす（動画のコマは、次の部分の頭出しの直後などに間があいたり詰まったりして、柄がかくつくため）
@@ -240,7 +240,7 @@ function wipeProgress() {
 }
 // 入ってくる柄が画面をおおいきったら true（その部分を終えてよい）
 const wipeCovered = () => Boolean(wipe && (wipe.hold || (wipe.dir === "in" && performance.now() - wipe.from >= wipe.half * 1000)));
-// ⚡ ハイライトの書き出し中、つなぎ目の柄を重ねる
+// ハイライトの書き出し中、つなぎ目の柄を重ねる
 function drawPieceTransition(w, h) {
   const p = wipeProgress();
   if (p !== null) drawTransition(w, h, editCtx, p);
@@ -343,7 +343,7 @@ document.addEventListener("keydown", (e) => {
   if (e.target.matches?.("input[type=range]")) e.target.blur(); // バーにフォーカスが残って、矢印がバーを動かさないように
 });
 
-// 何を書き出す？：全部（exportRange "all"）／⚡ ハイライト（"goals"）。得点板を出すかは「🎉 得点板と演出」で
+// 何を書き出す？：全部（exportRange "all"）／ハイライト（"goals"）。得点板を出すかは「得点板と演出」で
 const chosenExport = () => (exportRange === "all" ? "all" : "hl");
 document.querySelectorAll("[data-export-mode]").forEach((b) =>
   b.addEventListener("click", () => {
@@ -352,7 +352,7 @@ document.querySelectorAll("[data-export-mode]").forEach((b) =>
     showExportRange();
   })
 );
-// 書き出すところ：[はじめの秒, 終わりの秒] のならび。全部か、⚡ ハイライト（得点・⭐ の前後。近いものはひとつにつなぐ）
+// 書き出すところ：[はじめの秒, 終わりの秒] のならび。全部か、ハイライト（得点・⭐ の前後。近いものはひとつにつなぐ）
 function exportSegments(range = exportRange) {
   const d = Number.isFinite(editVideo.duration) ? editVideo.duration : 0;
   if (!d) return [];

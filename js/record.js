@@ -12,7 +12,7 @@ let recorder = null;
 let recording = false;
 // 録り終えた動画 [{ blob, type, from, to, take, takeAt, file, url, saved }]。from・to はその回の録りはじめからの秒。
 // 「スコアそのままで続きを撮る」で録りなおしても前の動画は消さず、続けて足していく（take が何回目の録画か）。
-// 消すのは動画の行の 🗑 だけ（すぐ消して「元に戻す」で戻せる）
+// 消すのは動画の行のごみ箱 だけ（すぐ消して「元に戻す」で戻せる）
 let clips = [];
 let take = 0;
 let startedAt = 0;
@@ -78,14 +78,14 @@ function startClip() {
   }, SEGMENT_MS);
 }
 
-// いまの1本を閉じて、すぐ次の1本を録りはじめる（🔗 つなぐで、決めた区切りごとに別の動画にする。一時停止中でも閉じられる）
+// いまの1本を閉じて、すぐ次の1本を録りはじめる（つなぐで、決めた区切りごとに別の動画にする。一時停止中でも閉じられる）
 function nextClip() {
   clearTimeout(segmentTimer);
   if (recorder && recorder.state !== "inactive") recorder.stop();
   startClip();
 }
 
-// 📹 録画ボタン：撮る画面の canvas と音で録画をはじめる（録れない端末・カメラがないときは知らせる）
+// 録画ボタン：撮る画面の canvas と音で録画をはじめる（録れない端末・カメラがないときは知らせる）
 function startRecording() {
   if (!window.MediaRecorder || !screen.captureStream) {
     notice("この端末のブラウザでは録画できません");
@@ -110,7 +110,7 @@ function startRecording() {
 let recKind = "shot";
 // manualFrames：canvas を「描いたときだけ1コマ」録る（書き出しで、動画のコマごとに requestFrame する。editor.js の startFrameSync）
 // 始められたら true。この端末の MediaRecorder が断ったら（形式・canvas を録れないなど）何も変えずに false
-// split：5分ごとに分けるか（なければ「💾 保存の設定」のとおり）。label：動画の一覧に出す名前（✂️ 最初の5分 など）
+// split：5分ごとに分けるか（なければ「保存の設定」のとおり）。label：動画の一覧に出す名前（✂️ 最初の5分 など）
 // clock：録った動画の中の時間（秒）を返す関数（なければ、録りはじめからの時計。見ながら記録は動画の時間：一時停止のあいだは進まない）
 let recSplit = false;
 let recLabel = "";
@@ -141,7 +141,7 @@ function beginRecording(canvas, audioTracks, kind = "shot", { manualFrames = fal
   return true;
 }
 
-// 撮った回ごとの、止めたときのスコア（⚡ 得点ハイライトの結果の札に使う）
+// 撮った回ごとの、止めたときのスコア（得点ハイライトの結果の札に使う）
 const takeEnd = {};
 let cardTimer = 0; // 結果の札を出して、止めるのを待っているところ
 // 録画を止める（いまの1本を閉じると、保存の画面が出る）。時間の表示とボタンも元にもどす。
@@ -224,13 +224,13 @@ function clipFileName(c, index, count) {
   const d = new Date(c.takeAt);
   const stamp = `${d.getFullYear()}${pad2(d.getMonth() + 1)}${pad2(d.getDate())}-${pad2(d.getHours())}${pad2(d.getMinutes())}`;
   const ext = c.type.includes("mp4") ? "mp4" : "webm";
-  // 🔗 つないだ動画：「ハイライト_20261028_part1.mp4」（名前は つなぐ のファイルの名前。分けたときだけ part の通し番号）
+  // つないだ動画：「ハイライト_20261028_part1.mp4」（名前は つなぐ のファイルの名前。分けたときだけ part の通し番号）
   if (c.kind === "merge") return `${safeName(c.label) || "ハイライト"}_${stamp.slice(0, 8)}${count > 1 ? `_part${index + 1}` : ""}.${ext}`;
   const tail = c.kind === "highlight" ? "-highlight" : c.kind === "cut" ? `-cut${count > 1 ? `-${index + 1}` : ""}` : count > 1 ? `-${index + 1}` : "";
   return `score-${stamp}${tail}.${ext}`;
 }
 
-// 保存のしかた：iPhone・iPad は共有から「ビデオを保存」で写真へ。共有できる端末は LINE などへ、できなければ ⬇️ で保存
+// 保存のしかた：iPhone・iPad は共有から「ビデオを保存」で写真へ。共有できる端末は LINE などへ、できなければ ダウンロード で保存
 const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 // 保存の画面の、保存のしかたの案内（iPhone は「ビデオを保存」、ほかは共有かダウンロード）を出す
 function showSaveGuide() {
@@ -411,7 +411,7 @@ $("toSetup").addEventListener("click", () => {
   closeCamera();
   showOpenSaved();
 });
-// はじめの画面の「🎞 録った動画（◯本）」：録った動画があるときだけ出し、押すと保存の画面（閉じるだけ）
+// はじめの画面の「録った動画（◯本）」：録った動画があるときだけ出し、押すと保存の画面（閉じるだけ）
 function showOpenSaved() {
   $("openSaved").hidden = !clips.length;
   setIconText($("openSaved"), "film", `録った動画（${clips.length}本）`);
@@ -421,7 +421,7 @@ $("closeSheetOnly").addEventListener("click", () => {
   closeSaveSheet();
   showOpenSaved();
 });
-// 0 - 0 にして、撮る画面にもどる（次の試合など）。動画は消さない（消すのは動画の行の 🗑）
+// 0 - 0 にして、撮る画面にもどる（次の試合など）。動画は消さない（消すのは動画の行のごみ箱）
 $("restartSave").addEventListener("click", () => {
   state.us = 0;
   state.them = 0;

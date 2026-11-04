@@ -1,9 +1,9 @@
-// ろくが：書き出し（撮った動画に（得点板をつける）・⚡ ハイライトで共通）と、撮るときの ⚡ ハイライト。
+// ろくが：書き出し（撮った動画に（得点板をつける）・ハイライトで共通）と、撮るときの ハイライト。
 // 読み込む順は index.html（page → store → draw → setup → preview → studio → record → editor → editor-live → render → quickjoin → quickbadge → merge → keep → app.js）。
 "use strict";
 
-// ---- 書き出し（共通）・⚡ ハイライト ----
-// ⚡ ハイライト：得点・⭐ ナイスプレーの何秒前から何秒後までを入れるか。はじめは 10・6（state.hlBefore・hlAfter。「💾 保存の設定」で 1〜30 秒）
+// ---- 書き出し（共通）・ハイライト ----
+// ハイライト：得点・⭐ ナイスプレーの何秒前から何秒後までを入れるか。はじめは 10・6（state.hlBefore・hlAfter。「保存の設定」で 1〜30 秒）
 const HIGHLIGHT_DEFAULT = { before: 10, after: 6 };
 // 時間（秒）のならびから、ハイライトに入れるところ [はじめ, 終わり] のならびを作る。近いものはひとつにつなぐ
 function highlightSpans(times, end) {
@@ -20,7 +20,7 @@ function highlightSpans(times, end) {
   return spans;
 }
 
-// ⚡ ハイライトに入れる長さの − ＋（[data-hl-range] の欄ごと：はじめの画面の「💾 保存の設定」・保存の画面・撮った動画に）。
+// ハイライトに入れる長さの − ＋（[data-hl-range] の欄ごと：はじめの画面の「保存の設定」・保存の画面・撮った動画に）。
 // 変えたら、長さの目安・作るボタンも出しなおす
 function renderHighlightRange() {
   document.querySelectorAll("[data-hl-range]").forEach((box) => {
@@ -50,7 +50,7 @@ function renderHighlightRange() {
     box.replaceChildren(title, row);
   });
 }
-// 長さを変えたら、それを使うところを出しなおす（保存の画面の「⚡ 得点ハイライトを作る（約 ◯:◯◯）」・撮った動画にの長さの目安・はじめの画面の小さな字）
+// 長さを変えたら、それを使うところを出しなおす（保存の画面の「得点ハイライトを作る（約 ◯:◯◯）」・撮った動画にの長さの目安・はじめの画面の小さな字）
 function showHighlightSetting() {
   if (!$("saveSheet").hidden) showHighlightButton();
   if (!$("editor").hidden) showExportRange();
@@ -59,9 +59,9 @@ function showHighlightSetting() {
 
 // 書き出す（共通）：pieces＝[{ src: 動画の URL, a: はじめの秒, b: 終わりの秒 }] を順に流して、canvas の絵と動画の音を1本に録る。
 // あいだを飛ばすときは録画を一時停止してつなぐ。流した時間だけかかる
-// result：結果の札に出すスコア { us, them }（入れるかどうか・どこには「💾 保存の設定」で決まる。resultCardPlace）
-// split・label：5分ごとに分けるか・動画の一覧に出す名前（LINE で送る用の書き出し。なければ「💾 保存の設定」のとおり）
-// partStarts：別の動画にしはじめる部分の番号（🔗 つなぐの「動画の途中で切らない」。0 番は入れない）
+// result：結果の札に出すスコア { us, them }（入れるかどうか・どこには「保存の設定」で決まる。resultCardPlace）
+// split・label：5分ごとに分けるか・動画の一覧に出す名前（LINE で送る用の書き出し。なければ「保存の設定」のとおり）
+// partStarts：別の動画にしはじめる部分の番号（つなぐの「動画の途中で切らない」。0 番は入れない）
 // transition：つなぎ目の柄（なければハイライトの柄）。badge：分けた各1本の最初に「1/3」の札を入れるか
 async function renderPieces(pieces, { overlay, kind, title, result, split, label, partStarts = null, transition = null, badge = true }) {
   if (!window.MediaRecorder || !editScreen.captureStream) {
@@ -167,7 +167,7 @@ async function renderPieces(pieces, { overlay, kind, title, result, split, label
     if (recorder?.state === "paused") recorder.resume();
     await recordCard(result);
   }
-  // 最後まで書き出せたら記録（やめたとき・1本も書き出せなかったときは数えない）：edit＝撮った動画に・highlight＝⚡ ハイライト。数は秒
+  // 最後まで書き出せたら記録（やめたとき・1本も書き出せなかったときは数えない）：edit＝撮った動画に・highlight＝ハイライト。数は秒
   if (exporting && started) logUse(kind === "highlight" ? "highlight" : "export", Math.round(total));
   finishExport();
 }
@@ -215,7 +215,7 @@ async function exportVideo() {
   const pieces = exportSegments().map(([a, b]) => ({ src: editVideo.src, a, b }));
   if (!pieces.length) return;
   exportMode = true;
-  const highlight = exportRange === "goals"; // ⚡ ハイライト：保存の画面でも「⚡ ハイライト」として並ぶ
+  const highlight = exportRange === "goals"; // ハイライト：保存の画面でも「ハイライト」として並ぶ
   await renderPieces(pieces, {
     overlay: true,
     kind: highlight ? "highlight" : "edit",
@@ -224,7 +224,7 @@ async function exportVideo() {
   });
 }
 
-// ⚡ ハイライト（撮るとき）：撮っているあいだに ＋1・⭐ を押した時間の前後を、録った動画（5分ごとの何本か）から切り出してつなぐ。
+// ハイライト（撮るとき）：撮っているあいだに ＋1・⭐ を押した時間の前後を、録った動画（5分ごとの何本か）から切り出してつなぐ。
 // 近いものはひとつにまとめる（highlightSpans）。録った動画が分かれているところは、それぞれの動画から続けて切り出す
 function highlightPieces() {
   const pieces = [];
@@ -244,7 +244,7 @@ function highlightPieces() {
   });
   return pieces;
 }
-// 保存の画面の「⚡ 得点ハイライトを作る」を、作れる長さがあるときだけ、長さの目安つきで出す
+// 保存の画面の「得点ハイライトを作る」を、作れる長さがあるときだけ、長さの目安つきで出す
 function showHighlightButton() {
   const total = highlightPieces().reduce((sum, p) => sum + (p.b - p.a), 0);
   $("makeHighlight").hidden = !total;

@@ -2,8 +2,8 @@
 // 読み込む順は index.html（page → store → draw → setup → preview → studio → record → editor → editor-live → render → quickjoin → quickbadge → merge → keep → app.js）。
 "use strict";
 
-// ---- 点の入れ方を選ぶ：▶ 見ながら記録（1倍で1回流しながら、同時に書き出す）／✏️ じっくり記録（いまの形。あとで書き出す） ----
-// 新しく選んだ動画を開いたときだけ出す（「🎞 さっきの動画にもどる」では出さない）
+// ---- 点の入れ方を選ぶ：▶ 見ながら記録（1倍で1回流しながら、同時に書き出す）／じっくり記録（いまの形。あとで書き出す） ----
+// 新しく選んだ動画を開いたときだけ出す（「さっきの動画にもどる」では出さない）
 function showModePick() {
   $("editor").classList.toggle("is-choosing", !modeChosen);
   $("editModePick").hidden = modeChosen;
@@ -100,7 +100,7 @@ function toggleQuickPause() {
   showQuickTime();
 }
 // 見ながら記録を終える：結果の札（全部にも入れるとき、最後に）を録ってから止め、保存の画面へ。
-// 入れた点・⭐ は、保存の画面の「⚡ 得点ハイライトを作る」にも使う（撮りながらと同じ）
+// 入れた点・⭐ は、保存の画面の「得点ハイライトを作る」にも使う（撮りながらと同じ）
 async function finishQuick() {
   if (!quick) return;
   quick = false;

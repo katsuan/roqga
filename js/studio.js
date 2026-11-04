@@ -9,7 +9,7 @@ const screenCtx = screen.getContext("2d");
 let cameraStream = null;
 let wakeLock = null;
 
-// 📹 カメラを開いて、撮る画面に切りかえる（マイクが使えないときは映像だけ。使えないときは知らせる）
+// カメラを開いて、撮る画面に切りかえる（マイクが使えないときは映像だけ。使えないときは知らせる）
 async function openCamera() {
   $("setupError").hidden = true;
   showTeamColors(); // はじめの画面で変えた色を、＋1 のボタンにも
@@ -78,7 +78,7 @@ async function closeCamera() {
   wakeLock = null;
   $("studio").hidden = true;
   $("setup").hidden = false;
-  showOpenSaved(); // 録った動画があれば「🎞 録った動画」を出す
+  showOpenSaved(); // 録った動画があれば「録った動画」を出す
   showSetupScore();
   drawPreview();
 }
@@ -226,7 +226,7 @@ $("openCamera").addEventListener("click", async () => {
   setIconText(button, "video", "カメラを開いています…", false);
   try {
     await openCamera();
-    if (cameraStream) logUse("camera"); // 📹 撮りながらでカメラを開けた
+    if (cameraStream) logUse("camera"); // 撮りながらでカメラを開けた
   } finally {
     button.disabled = false;
     button.replaceChildren(...label);

@@ -229,7 +229,7 @@ document.querySelectorAll("[data-split]").forEach((b) =>
 // 選んでいるほうと、たたんだ見出しの小さな字（分けるときだけ「5分ごと」）を出す
 function showSplitSetting() {
   document.querySelectorAll("[data-split]").forEach((b) => b.setAttribute("aria-checked", String((b.dataset.split === "on") === state.split)));
-  // たたんだ見出しの小さな字：分けるときは「5分ごと」、ハイライトの長さを変えたときは「⚡5〜3秒」
+  // たたんだ見出しの小さな字：分けるときは「5分ごと」、ハイライトの長さを変えたときは「5〜3秒」
   const custom = state.hlBefore !== HIGHLIGHT_DEFAULT.before || state.hlAfter !== HIGHLIGHT_DEFAULT.after;
   if ($("splitMeta")) $("splitMeta").textContent = [state.split ? "5分ごと" : "", custom ? `ハイライト ${state.hlBefore}〜${state.hlAfter}秒` : ""].filter(Boolean).join("・"); // 前の index.html には、この欄がない
 }
@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Q キットが古い・読めないときは、押して開く・たたむだけ
   if (!fxPick) $("fxIconBtn").addEventListener("click", () => ($("fxIconPicker").hidden = !$("fxIconPicker").hidden));
 });
-// 「撮った動画に」の「🎉 得点のエフェクト」の見出しの右：いまの字（⚽ GOAL!）か「出さない」
+// 「撮った動画に」の「得点のエフェクト」の見出しの右：いまの字（⚽ GOAL!）か「出さない」
 const showEditFxMeta = () => {
   $("editFxMeta").textContent = [state.board ? "" : "得点板なし", state.goalFx ? fxLabel() : "演出なし"].filter(Boolean).join("・");
 };
@@ -371,7 +371,7 @@ document.querySelectorAll("[data-mode]").forEach((tab) =>
   })
 );
 
-// ---- ⚡ ハイライトのつなぎ目の柄を選ぶボタン（draw.js の TRANSITIONS から作る。有料の柄は 🔒 で、まだ選べない） ----
+// ---- ハイライトのつなぎ目の柄を選ぶボタン（draw.js の TRANSITIONS から作る。有料の柄は 鍵の印で、まだ選べない） ----
 function renderTransitionChoices() {
   document.querySelectorAll("[data-transition-row] .transition-chips").forEach((box) => {
     const key = box.closest("[data-transition-row]").dataset.for === "merge" ? "mergeTransition" : "transition"; // つなぐは別に選ぶ

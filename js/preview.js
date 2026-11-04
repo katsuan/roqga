@@ -6,7 +6,7 @@
 const preview = $("preview");
 const previewCtx = preview.getContext("2d");
 let previewLoop = 0;
-// プレビューの種類："shoot"（📹 撮る画面）・"saved"（💾 保存される動画）
+// プレビューの種類："shoot"（撮る画面）・"saved"（保存される動画）
 let previewMode = "shoot";
 let flowStart = 0; // 保存される動画の流れを始めた時刻
 // 芝のピッチの絵（カメラの映像・動画の代わり）を描く
@@ -46,7 +46,7 @@ function drawPreview() {
   if ((goalFx || niceFx) && $("studio").hidden) previewLoop = requestAnimationFrame(drawPreview);
 }
 
-// 📹 撮る画面の見本：録画中の赤い枠・時間、右上の ●●●、＋1／−1・⭐ ナイス・録画ボタン（＋1 の位置の設定どおり。撮る画面の style.css と同じ並び）
+// 撮る画面の見本：録画中の赤い枠・時間、右上の ●●●、＋1／−1・⭐ ナイス・録画ボタン（＋1 の位置の設定どおり。撮る画面の style.css と同じ並び）
 function drawStudioMock(c, w, h) {
   const k = h / 390; // スマホを横にしたときの高さ（390）で 1
   const font = (size) => `800 ${size * k}px "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif`;
@@ -154,7 +154,7 @@ function drawStudioMock(c, w, h) {
   c.restore();
 }
 
-// 💾 保存される動画の見本：結果の札（最初）→ 試合 → GOAL → つなぎ目 → 試合 → 結果の札（最後）を、いまの設定どおりにくりかえす（⚡ ハイライトの見本）
+// 保存される動画の見本：結果の札（最初）→ 試合 → GOAL → つなぎ目 → 試合 → 結果の札（最後）を、いまの設定どおりにくりかえす（ハイライトの見本）
 function savedFlowSteps() {
   const card = resultCardPlace("highlight");
   const steps = [];
@@ -201,7 +201,7 @@ $("previewHand").addEventListener("click", () => {
   showHand();
   drawPreview();
 });
-// プレビューの切りかえ（📹 撮る画面／💾 保存される動画）
+// プレビューの切りかえ（撮る画面／保存される動画）
 document.querySelectorAll("[data-preview]").forEach((b) =>
   b.addEventListener("click", () => {
     previewMode = b.dataset.preview;

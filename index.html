@@ -98,8 +98,8 @@
   <details id="previewFold" class="ls-fold">
     <summary><span class="ls-fold-icon ls-icon" data-icon="view" aria-hidden="true"></span><span class="fold-title">プレビュー・得点板と演出</span><span id="fxMeta" class="meta"></span></summary>
     <div class="ls-fold-body">
-    <!-- 2つのプレビュー：📹 撮る画面（録画中に見える画面：得点板・＋1／−1・⭐・録画ボタン。＋1 の位置の設定どおり）と、
-         💾 保存される動画（結果の札 → 試合 → GOAL → つなぎ目 → 結果の札 の流れを、設定どおりにくりかえす）。アプリ版と同じ -->
+    <!-- 2つのプレビュー：撮る画面（録画中に見える画面：得点板・＋1／−1・⭐・録画ボタン。＋1 の位置の設定どおり）と、
+         保存される動画（結果の札 → 試合 → GOAL → つなぎ目 → 結果の札 の流れを、設定どおりにくりかえす）。アプリ版と同じ -->
     <div class="seg preview-tabs" role="tablist" aria-label="プレビュー">
       <button class="chip" type="button" role="tab" data-preview="shoot" aria-selected="true"><span class="ls-icon in-text" data-icon="video" aria-hidden="true"></span>撮る画面</button>
       <button class="chip" type="button" role="tab" data-preview="saved" aria-selected="false"><span class="ls-icon in-text" data-icon="save" aria-hidden="true"></span>保存される動画</button>
@@ -107,11 +107,11 @@
     <div class="preview-frame">
       <canvas id="preview" class="preview" width="1280" height="720" aria-label="プレビュー"></canvas>
       <span class="preview-tag">プレビュー</span>
-      <!-- 📹 撮る画面の見本の右上の ●●● に重ねた、押せるボタン：＋1・録画ボタンの位置を変える（撮る画面の ●●● と同じ設定。端末に残す） -->
+      <!-- 撮る画面の見本の右上の ●●● に重ねた、押せるボタン：＋1・録画ボタンの位置を変える（撮る画面の ●●● と同じ設定。端末に残す） -->
       <button id="previewHand" class="preview-hand" type="button"></button>
     </div>
     <p id="previewCaption" class="hint preview-caption"></p>
-    <!-- エフェクトの設定（出さない／出す／▶ 試す・アイコン・文字）。「撮った動画に」を開いているあいだは、そちらの「🎉 得点のエフェクト」へ移す（editor.js） -->
+    <!-- エフェクトの設定（出さない／出す／▶ 試す・アイコン・文字）。「撮った動画に」を開いているあいだは、そちらの「得点のエフェクト」へ移す（editor.js） -->
     <div id="fxControls" class="fx-controls">
     <!-- 得点板を出すか：プレビュー・撮る画面・撮った動画に・書き出す動画のすべてに効く（出さないときは GOAL の演出・つなぎ目だけ） -->
     <div class="split">
@@ -174,7 +174,7 @@
       </div>
       <p class="hint">LINE のトークで送れる動画は5分まで。トークで送るなら「5分ごとに分ける」に。</p>
     </div>
-    <!-- ⚡ ハイライトに入れる長さ（押した時間の何秒前〜何秒後。はじめは 10・6）。中身は render.js の renderHighlightRange -->
+    <!-- ハイライトに入れる長さ（押した時間の何秒前〜何秒後。はじめは 10・6）。中身は render.js の renderHighlightRange -->
     <div class="split hl-range is-light" data-hl-range></div>
     <!-- 結果の札：動画の最初か最後に 2 秒、チーム名と最後のスコア（アプリ版と同じ）。はじめは最初・ハイライトだけ -->
     <div class="split">
@@ -194,7 +194,7 @@
   </details>
   <!-- LINE の中で開いているとき：保存は Safari・Chrome のほうが確か（LINE の中では、保存するとページが開きなおされ、録った動画が消えることがある） -->
   <p id="lineHint" class="guide" hidden>LINE 版では、保存すると録った動画が消えることがあるので、<a id="openOutside" href="#">Safari・Chrome で開く</a>のがおすすめです。</p>
-  <!-- 🔗 つなぐ：ハイライトなど、いくつかの動画を選んで1本につなぐ（並べかえ・つなぎ目の柄・5分をこえたときの分け方・1/3 の札・ファイル名の通し番号）。中身は js/merge.js（作り直さずに並べるのは js/quickjoin.js） -->
+  <!-- つなぐ：ハイライトなど、いくつかの動画を選んで1本につなぐ（並べかえ・つなぎ目の柄・5分をこえたときの分け方・1/3 の札・ファイル名の通し番号）。中身は js/merge.js（作り直さずに並べるのは js/quickjoin.js） -->
   <section id="mergePanel" class="merge-panel" data-mode-only="merge" hidden>
     <p class="hint merge-lead">ハイライトなど、いくつかの動画を選んで1本につなぎます。撮った順に並びます（↑↓ で並べかえ）。</p>
     <ol id="mergeList" class="merge-list"></ol>
@@ -227,12 +227,12 @@
   <!-- 撮った動画にの画面から「← 戻る」でもどっても、選んだ動画と入れた点は残す。ここから続きにもどれる（editor.js の showResume） -->
   <button id="resumeEdit" class="ls-button is-block" type="button" hidden><span class="ls-icon" data-icon="film" aria-hidden="true"></span>さっきの動画にもどる</button>
   <input id="videoFile" type="file" accept="video/*" hidden>
-  <!-- 録った動画があるときだけ：保存の画面をもう一度開く（はじめの画面にもどっても、0 - 0 から撮っても残っている。消すのは動画の行の 🗑） -->
+  <!-- 録った動画があるときだけ：保存の画面をもう一度開く（はじめの画面にもどっても、0 - 0 から撮っても残っている。消すのは動画の行のごみ箱） -->
   <button id="openSaved" class="ls-button is-block" type="button" hidden></button>
   <p id="setupError" class="error" hidden></p>
   <p class="hint" data-mode-only="shoot">動画はこの端末の中だけ。撮っているあいだは、ほかのアプリに切りかえないでね。</p>
   <p class="hint" data-mode-only="later" hidden>動画はこの端末の中だけ。書き出すあいだは、ほかのアプリに切りかえないでね。</p>
-  <!-- 「📤 ろくがを紹介する」と仲間のアイコン列：おくるんで紹介カードを送る窓口（line-share/shared/tool-share.js。中身は line-share/data/hub-links.json） -->
+  <!-- 「ろくがを紹介する」と仲間のアイコン列：おくるんで紹介カードを送る窓口（line-share/shared/tool-share.js。中身は line-share/data/hub-links.json） -->
   <div data-tool-share></div>
 </main>
 
@@ -309,7 +309,7 @@
   <div class="editor-side">
   <!-- 動画を選んだら、まず点の入れ方を2つから選ぶ（長さの目安つき。editor.js の showModePick）。
        ▶ 見ながら記録：1倍で1回流しながら、同時に書き出す（見終わったら完成。一時停止はできる。速さ・戻しはなし）
-       ✏️ じっくり記録：速さ・10秒戻しで点を入れて、あとで書き出す（書き出しで、もう1回流す） -->
+       じっくり記録：速さ・10秒戻しで点を入れて、あとで書き出す（書き出しで、もう1回流す） -->
   <div id="editModePick" class="edit-mode-pick" hidden>
     <p class="edit-mode-title">どうやって点を入れる？</p>
     <!-- 左右に並べて、同じ段に同じことがら（完成 → 時間（2行目に、ハイライトも作るときに足される時間。ハイライトは作りたいときだけ）→ 一時停止 → 再生位置 → 再生の速さ → あとで直す）を置き、横に見くらべられるように -->
@@ -364,20 +364,20 @@
   <!-- ⭐ ナイスプレー（おしい・いいプレーなど）：点は変えずに、その時間をハイライトに入れる -->
   <button id="editMark" class="mark-wide" type="button">⭐ ナイスプレー（おしい場面も）</button>
   <ol id="editEvents" class="edit-events"></ol>
-  <!-- 🎉 得点のエフェクト：はじめの画面と同じ設定（出さない／出す／▶ 試す・アイコン・文字）。中身ははじめの画面の #fxControls を開いているあいだだけ移す -->
+  <!-- 得点のエフェクト：はじめの画面と同じ設定（出さない／出す／▶ 試す・アイコン・文字）。中身ははじめの画面の #fxControls を開いているあいだだけ移す -->
   <details id="editFxFold" class="edit-fx">
     <summary><span><span class="ls-icon in-text" data-icon="celebrate" aria-hidden="true"></span>得点板と演出</span><span id="editFxMeta" class="meta"></span></summary>
     <div id="editFxBody" class="edit-fx-body"></div>
   </details>
-  <!-- 何を書き出す？：全部か ⚡ ハイライト（得点・⭐ の何秒前〜何秒後をつなぐ。はじめは 10秒前〜6秒後。撮るときの得点ハイライトと同じ）。
-       得点板を出すかは「🎉 得点板と演出」で。長さの目安は editor.js の showExportRange -->
+  <!-- 何を書き出す？：全部か ハイライト（得点・⭐ の何秒前〜何秒後をつなぐ。はじめは 10秒前〜6秒後。撮るときの得点ハイライトと同じ）。
+       得点板を出すかは「得点板と演出」で。長さの目安は editor.js の showExportRange -->
   <p class="export-mode-title">何を書き出す？</p>
   <div class="export-modes" role="radiogroup" aria-label="書き出すもの">
     <button type="button" role="radio" data-export-mode="all" aria-checked="true"><span class="em-icon ls-icon" data-icon="film" aria-hidden="true"></span><span class="em-text"><b>全部</b><small>試合まるごと</small></span><em data-em-len="all"></em></button>
     <button type="button" role="radio" data-export-mode="hl" aria-checked="false"><span class="em-icon ls-icon" data-icon="zap" aria-hidden="true"></span><span class="em-text"><b>ハイライト</b><small>得点・⭐ の前後だけをつなぐ</small></span><em data-em-len="hl"></em></button>
   </div>
   <p id="exportModeHint" class="export-mode-hint" hidden>ハイライトは、＋1 か ⭐ を入れると選べます</p>
-  <!-- ⚡ ハイライトのつなぎ目の柄（⚡ ハイライトを選んだときだけ）。ボタンは draw.js の TRANSITIONS から作る（setup.js） -->
+  <!-- ハイライトのつなぎ目の柄（ハイライトを選んだときだけ）。ボタンは draw.js の TRANSITIONS から作る（setup.js） -->
   <div class="hl-range" data-hl-range hidden></div>
   <div class="transition-row" data-transition-row hidden><span>つなぎ目</span><div class="transition-chips" role="radiogroup" aria-label="ハイライトのつなぎ目"></div></div>
   <button id="editExport" class="ls-button is-primary is-block" type="button"><span class="ls-icon" data-icon="film" aria-hidden="true"></span>得点板つきで書き出す</button>
@@ -412,7 +412,7 @@
       <!-- 端末の中に残しているところ（keep.js）。終わるまでに保存・共有すると、ページが読みなおされたときに消えることがある -->
       <p id="keepNote" class="hint" hidden></p>
     </div>
-    <!-- 右：まず保存・共有、そのあと ⚡ ハイライト、次はどうする？（横の画面では、この欄の中だけ動く） -->
+    <!-- 右：まず保存・共有、そのあと ハイライト、次はどうする？（横の画面では、この欄の中だけ動く） -->
     <div class="sheet-side">
       <!-- 保存のしかた（iPhone は「ビデオを保存」で写真へ。端末によって出し分ける） -->
       <p id="saveGuide" class="guide" hidden></p>
@@ -444,7 +444,7 @@
       <button id="makeHighlight" class="ls-button is-block" type="button" hidden><span class="ls-icon" data-icon="zap" aria-hidden="true"></span>得点ハイライトを作る</button>
       <!-- 次はどうする？：3つから選ぶ。それぞれ、押すとどうなるかを1行で。
            続きを撮る（同じチーム・スコアそのまま）／同じチームで 0 - 0 から（次の試合）／はじめの画面へ（チームを変える）。
-           どれを選んでも動画は消さない（消すのは動画の行の 🗑。ページを閉じる・更新すると、どのみち消える）。
+           どれを選んでも動画は消さない（消すのは動画の行の ごみ箱。ページを閉じる・更新すると、どのみち消える）。
            共有がすんだら「0 - 0 から」を目立たせる -->
       <div id="nextShot" class="next-shot" role="group" aria-labelledby="nextTitle">
         <p id="nextTitle" class="next-title">次はどうする？</p>
@@ -452,7 +452,7 @@
         <button id="restartSave" class="next-btn" type="button"><b>⟲ 同じチームで 0 - 0 から</b><span>次の試合（動画はこの画面に残ります）</span></button>
         <button id="toSetup" class="next-btn" type="button"><b><span class="ls-icon in-text" data-icon="home" aria-hidden="true"></span>はじめの画面へ</b><span>チーム・色を変える（動画は残ります）</span></button>
       </div>
-      <!-- はじめの画面の「🎞 録った動画」から開いたときは、閉じるだけ -->
+      <!-- はじめの画面の「録った動画」から開いたときは、閉じるだけ -->
       <button id="closeSheetOnly" class="ls-button is-block" type="button" hidden>閉じる</button>
     </div>
   </div>

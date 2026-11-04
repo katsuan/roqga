@@ -5,7 +5,7 @@
 // 得点板：左上に濃い札。[左のチームの色] 左のチーム 2 - 1 右のチーム [右のチームの色]。大きさは映像の高さに合わせる。
 // opts：score（{ us, them }。なければいまのスコア）・scale（何倍か）・center（まん中の高さ。上からの割合。結果の札）
 function drawScoreboard(w, h, ctx = screenCtx, opts = {}) {
-  if (!state.board) return; // 「得点板：出さない」（👀 プレビューの欄）
+  if (!state.board) return; // 「得点板：出さない」（プレビューの欄）
   const s = (Math.min(w, h) / 720) * (opts.scale || 1); // 720p で 1
   const pad = 20 * s;
   const boxH = 64 * s;
@@ -72,7 +72,7 @@ function drawScoreboard(w, h, ctx = screenCtx, opts = {}) {
   ctx.restore();
 }
 
-// ---- 結果の札（「💾 保存の設定」）：動画の最初か最後に 2 秒、RoQga の面（つなぎ目で画面をおおったところ）に、得点板を大きく（1.6 倍）してロゴの下に。
+// ---- 結果の札（「保存の設定」）：動画の最初か最後に 2 秒、RoQga の面（つなぎ目で画面をおおったところ）に、得点板を大きく（1.6 倍）してロゴの下に。
 // 最初に入れると、LINE などのサムネ（最初のコマ）に結果が出る。アプリ版（ResultCardRenderer）と同じ絵・同じ寸法 ----
 const RESULT_CARD_MS = 2000;
 let resultCard = null; // いま出している札のスコア { us, them }（出していなければ null）
@@ -81,7 +81,7 @@ function drawResultCard(w, h, c, score) {
   drawRoqgaWipe(w, h, c, 0.5);
   drawScoreboard(w, h, c, { score, scale: 1.6, center: 0.79 });
 }
-// その動画に結果の札を入れるところ（"start"・"end"・null）。kind：highlight（⚡ ハイライト）か full（全部）。
+// その動画に結果の札を入れるところ（"start"・"end"・null）。kind：highlight（ハイライト）か full（全部）。
 // 得点板を出さないときは入れない（チームが分からないため）。はじめはハイライトだけ
 function resultCardPlace(kind) {
   if (!state.board || state.resultCard === "none") return null;
@@ -89,7 +89,7 @@ function resultCardPlace(kind) {
 }
 
 // ---- ⭐ ナイスのエフェクト：⭐ ナイスを押したとき、得点板のすぐ下（左上）に小さく「⭐ ナイス！」の札がぽんと出て、まわりに小さな星が散る（1.4 秒。動画にも入る）。
-// GOAL より控えめ。「👀 プレビュー・得点板と演出」で出さないにもできる。アプリ版（NiceRenderer）と同じ絵・同じ動き ----
+// GOAL より控えめ。「プレビュー・得点板と演出」で出さないにもできる。アプリ版（NiceRenderer）と同じ絵・同じ動き ----
 const NICE_FX_MS = 1400;
 let niceFx = null; // { at: 時刻 }（出していなければ null）
 // ⭐ ナイスのエフェクトを、押してから NICE_FX_MS のあいだ描く。終わったら消す
@@ -160,7 +160,7 @@ function drawPieceBadge(w, h, c) {
   if (!pieceTotal || performance.now() - clipStartedAt > PIECE_BADGE_MS) return;
   drawBadgeLabel(w, h, c, pieceTotal > 0 ? `${clipNo}/${pieceTotal}` : `${clipNo}本目`);
 }
-// 札の絵（右上の丸い札と文字）。🔗 つなぐで、最初だけ作りなおすとき（quickbadge.js）も使う
+// 札の絵（右上の丸い札と文字）。つなぐで、最初だけ作りなおすとき（quickbadge.js）も使う
 function drawBadgeLabel(w, h, c, label) {
   const s = Math.min(w, h) / 720;
   c.save();
@@ -255,7 +255,7 @@ function drawGoalFx(w, h, c = screenCtx) {
   c.restore();
 }
 
-// ---- ⚡ ハイライトのつなぎ目（トランジション）：切り出した部分のつなぎ目に、0.8 秒の柄を重ねる ----
+// ---- ハイライトのつなぎ目（トランジション）：切り出した部分のつなぎ目に、0.8 秒の柄を重ねる ----
 // 前の部分の終わり 0.4 秒で柄が入ってきて画面をおおい、次の部分のはじめ 0.4 秒で抜けていく（動画の長さは変わらない）。
 // 柄の一覧。premium: true は有料プランの柄（いまはまだない）。柄を足す・差しかえるときは、ここに1行と描き方（draw）を足す。
 // アプリ版（q-roqga-ios の TransitionRenderer）も同じ柄・同じ動きにそろえる
@@ -270,7 +270,7 @@ const transitionOf = (id) => TRANSITIONS.find((tr) => tr.id === id && !tr.premiu
 const transitionLogo = new Image();
 transitionLogo.src = "logo.svg"; // 横長のロゴ（柄のまん中に置く）
 
-// 書き出しのあいだだけ使う柄（🔗 つなぐは、ハイライトとは別に選ぶ。null ならハイライトの柄）
+// 書き出しのあいだだけ使う柄（つなぐは、ハイライトとは別に選ぶ。null ならハイライトの柄）
 let transitionPick = null;
 // p：0（入りはじめ）→ 0.5（画面をおおう＝つなぎ目）→ 1（抜けきる）
 function drawTransition(w, h, c, p) {
