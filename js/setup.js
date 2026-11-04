@@ -14,7 +14,7 @@ function showSetupScore() {
 // スコアを変える（途中から撮るとき）：各チームの下に − ＋ を出す／しまう。まんなかのスコアを押しても同じ
 function toggleScoreEdit() {
   const on = document.querySelector(".teams").classList.toggle("is-editing");
-  $("editScore").textContent = on ? "✓ できた" : "✏️ スコアを変える（途中からのとき）";
+  setIconText($("editScore"), on ? "check" : "edit", on ? "できた" : "スコアを変える（途中からのとき）");
   $("editScore").setAttribute("aria-expanded", on);
 }
 $("editScore").addEventListener("click", toggleScoreEdit);
@@ -231,7 +231,7 @@ function showSplitSetting() {
   document.querySelectorAll("[data-split]").forEach((b) => b.setAttribute("aria-checked", String((b.dataset.split === "on") === state.split)));
   // たたんだ見出しの小さな字：分けるときは「5分ごと」、ハイライトの長さを変えたときは「⚡5〜3秒」
   const custom = state.hlBefore !== HIGHLIGHT_DEFAULT.before || state.hlAfter !== HIGHLIGHT_DEFAULT.after;
-  if ($("splitMeta")) $("splitMeta").textContent = [state.split ? "5分ごと" : "", custom ? `⚡${state.hlBefore}〜${state.hlAfter}秒` : ""].filter(Boolean).join("・"); // 前の index.html には、この欄がない
+  if ($("splitMeta")) $("splitMeta").textContent = [state.split ? "5分ごと" : "", custom ? `ハイライト ${state.hlBefore}〜${state.hlAfter}秒` : ""].filter(Boolean).join("・"); // 前の index.html には、この欄がない
 }
 // ---- 結果の札：なし・最初・最後と、ハイライトだけ・全部にも ----
 document.querySelectorAll("[data-result-card]").forEach((b) =>
@@ -549,7 +549,7 @@ function drawSavedFlow(c, w, h) {
     if (step.key === "nice") drawNiceFxAt(w, h, c, p);
     if (step.key === "wipe") drawTransition(w, h, c, p);
   }
-  $("previewCaption").textContent = `⚡ ハイライトの見本：${step.label}`;
+  $("previewCaption").textContent = `ハイライトの見本：${step.label}`;
   if ($("previewFold").open && $("studio").hidden && previewMode === "saved") previewLoop = requestAnimationFrame(drawPreview);
 }
 // 見本の ●●● を押したら、＋1・録画ボタンの位置を まんなか → 左よせ → 右よせ と変える（撮る画面の ●●● と同じ。端末に残す）
@@ -588,7 +588,8 @@ function renderTransitionChoices() {
     const key = box.closest("[data-transition-row]").dataset.for === "merge" ? "mergeTransition" : "transition"; // つなぐは別に選ぶ
     box.replaceChildren(
       ...TRANSITIONS.map((tr) => {
-        const b = Object.assign(document.createElement("button"), { type: "button", className: "chip", textContent: tr.premium ? `🔒 ${tr.label}` : tr.label });
+        const b = Object.assign(document.createElement("button"), { type: "button", className: "chip" });
+        setIconText(b, tr.premium ? "lock" : "", tr.label);
         b.setAttribute("role", "radio");
         b.setAttribute("aria-checked", String(transitionOf(state[key]).id === tr.id));
         b.disabled = tr.premium;

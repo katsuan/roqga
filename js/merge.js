@@ -155,6 +155,7 @@ function renderMerge() {
       // ボタン（↑・↓・✕）を作る
       const btn = (text, label, disabled, onClick) => {
         const b = Object.assign(document.createElement("button"), { type: "button", textContent: text, disabled });
+        if (!text) b.append(lineIcon("close", false)); // 外す（✕）は線アイコン
         b.setAttribute("aria-label", `${i + 1}本目の動画を${label}`);
         b.addEventListener("click", onClick);
         return b;
@@ -168,7 +169,7 @@ function renderMerge() {
         name,
         btn("↑", "上へ", i === 0, move(-1)),
         btn("↓", "下へ", i === mergeItems.length - 1, move(1)),
-        btn("✕", "外す", false, () => {
+        btn("", "外す", false, () => {
           mergeItems.splice(i, 1);
           URL.revokeObjectURL(m.url);
           mergeChanged();
@@ -184,11 +185,11 @@ function renderMerge() {
   $("mergeExport").disabled = mergeItems.length < 2;
   const parts = mergeParts();
   const slow = mergeSlowReason(parts);
-  $("mergeExport").textContent = !mergeItems.length
-    ? "🔗 つないで書き出す"
+  setIconText($("mergeExport"), "link", !mergeItems.length
+    ? "つないで書き出す"
     : slow
-      ? `🔗 ${mergeItems.length}本をつないで書き出す（約 ${clock(Math.ceil(total))}）`
-      : `🔗 ${mergeItems.length}本をつなぐ（すぐ終わります）`;
+      ? `${mergeItems.length}本をつないで書き出す（約 ${clock(Math.ceil(total))}）`
+      : `${mergeItems.length}本をつなぐ（すぐ終わります）`, false);
   // 分けたときの見本：part ごとの長さ
   const max = SEGMENT_MS / 1000;
   // 「1/4」の札：分けるときだけ選べる（見出しの数は、いまの本数）
@@ -353,7 +354,7 @@ $("mergeExport").addEventListener("click", async () => {
   renderPieces(pieces, {
     overlay: false,
     kind: "merge",
-    title: `🔗 ${mergeItems.length}本をつないでいます…`,
+    title: `${mergeItems.length}本をつないでいます…`,
     split: timed,
     label,
     partStarts: timed ? null : starts,

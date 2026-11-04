@@ -94,7 +94,7 @@ $("editBack").addEventListener("click", closeEditor);
 function showResume() {
   const later = document.querySelector('[data-mode="later"]')?.getAttribute("aria-selected") === "true";
   $("resumeEdit").hidden = !(editUrl && later);
-  $("resumeEdit").textContent = editEvents.length ? `🎞 さっきの動画にもどる（得点 ${editEvents.length}件）` : "🎞 さっきの動画にもどる";
+  setIconText($("resumeEdit"), "film", editEvents.length ? `さっきの動画にもどる（得点 ${editEvents.length}件）` : "さっきの動画にもどる", false);
 }
 $("resumeEdit").addEventListener("click", showEditor);
 
@@ -359,7 +359,8 @@ function exportSegments(range = exportRange) {
   if (range === "all") return [[0, d]];
   return highlightSpans(editEvents.filter((ev) => ev.delta > 0 || ev.mark).map((ev) => ev.t), d); // 得点と ⭐ ナイスプレー
 }
-const EXPORT_LABELS = { all: "📼 全部を書き出す", hl: "⚡ ハイライトを書き出す" };
+const EXPORT_LABELS = { all: "全部を書き出す", hl: "ハイライトを書き出す" };
+const EXPORT_ICONS = { all: "film", hl: "zap" };
 // 選んでいるもの・それぞれの長さの目安・つなぎ目（ハイライトのときだけ）・書き出すボタンの文言
 function showExportRange() {
   const hasGoals = editEvents.some((ev) => ev.delta > 0 || ev.mark);
@@ -381,7 +382,7 @@ function showExportRange() {
   // つなぎ目：ハイライト・演出だけで、つなぐところが2つ以上のときだけ
   document.querySelector("#editor [data-transition-row]").hidden = mode === "all" || exportSegments("goals").length < 2;
   document.querySelector("#editor [data-hl-range]").hidden = mode === "all"; // 入れる長さ（ハイライトを選んだときだけ）
-  $("editExport").textContent = lens[mode] ? `${EXPORT_LABELS[mode]}（約 ${clock(Math.ceil(lens[mode]))}）` : EXPORT_LABELS[mode];
+  setIconText($("editExport"), EXPORT_ICONS[mode], lens[mode] ? `${EXPORT_LABELS[mode]}（約 ${clock(Math.ceil(lens[mode]))}）` : EXPORT_LABELS[mode], false);
 }
 ["loadedmetadata", "durationchange"].forEach((type) => editVideo.addEventListener(type, showExportRange));
 $("editSeek").addEventListener("input", (e) => {
@@ -537,7 +538,8 @@ function renderEditEvents() {
       dot.style.background = color;
       // 得点板を出さないときは、チーム名とスコアを出さない
       text.append(dot, ev.mark ? "⭐ ナイスプレー" : !state.board ? (ev.delta > 0 ? "GOAL" : "GOAL −1") : `${name} ${ev.delta > 0 ? "＋1" : "−1"} → ${l} - ${r}`);
-      const del = Object.assign(document.createElement("button"), { type: "button", textContent: "✕" });
+      const del = Object.assign(document.createElement("button"), { type: "button" });
+      del.append(lineIcon("close", false));
       del.setAttribute("aria-label", "この得点を消す");
       // 確かめずに消して、トーストの「元に戻す」で同じ場所にもどす
       del.addEventListener("click", () => {
@@ -603,7 +605,8 @@ function showModeChip() {
   const chip = $("editModeChip");
   chip.hidden = !modeChosen;
   chip.classList.toggle("is-quick", quick);
-  chip.textContent = quick ? "● 見ながら記録中" : "✏️ じっくり記録";
+  if (quick) chip.textContent = "● 見ながら記録中";
+  else setIconText(chip, "edit", "じっくり記録");
   chip.disabled = quick;
   chip.setAttribute("aria-label", quick ? "見ながら記録中" : "じっくり記録（押すと記録のしかたを選びなおす）");
 }
@@ -635,7 +638,7 @@ $("quickStart").addEventListener("click", () => {
 // 見ながら記録をはじめる：はじめから 1× で流し、得点板つきの絵と動画の音を、そのまま録る（撮った動画にの書き出しと同じ録り方）。
 // 点を入れると、その場で得点板・GOAL の演出が入る。一時停止すると録画も止まる。見終わる・「■ ここまでで保存」で保存の画面へ
 async function startQuick() {
-  if (!window.MediaRecorder || !editScreen.captureStream) return notice("この端末のブラウザでは書き出せません", "「✏️ じっくり記録」で点を入れて、ほかのブラウザで書き出してね。");
+  if (!window.MediaRecorder || !editScreen.captureStream) return notice("この端末のブラウザでは書き出せません", "「じっくり記録」で点を入れて、ほかのブラウザで書き出してね。");
   ensureAudio();
   await audioCtx?.resume().catch(() => {});
   editVideo.pause();

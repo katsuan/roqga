@@ -24,7 +24,8 @@ function highlightSpans(times, end) {
 // 変えたら、長さの目安・作るボタンも出しなおす
 function renderHighlightRange() {
   document.querySelectorAll("[data-hl-range]").forEach((box) => {
-    const title = Object.assign(document.createElement("span"), { className: "split-label", textContent: "⚡ ハイライトに入れる長さ（押した時間の前後）" });
+    const title = Object.assign(document.createElement("span"), { className: "split-label" });
+    setIconText(title, "zap", "ハイライトに入れる長さ（押した時間の前後）");
     // [−] 10秒前 [＋] の1組を作る
     const stepper = (key, word) => {
       const wrap = Object.assign(document.createElement("div"), { className: "hl-step" });
@@ -218,7 +219,7 @@ async function exportVideo() {
   await renderPieces(pieces, {
     overlay: true,
     kind: highlight ? "highlight" : "edit",
-    title: highlight ? "⚡ ハイライトを作っています…" : "書き出し中…",
+    title: highlight ? "ハイライトを作っています…" : "書き出し中…",
     result: scoreAt(editVideo.duration) // 結果の札：入れた点の最後のスコア
   });
 }
@@ -249,7 +250,7 @@ function showHighlightButton() {
   $("makeHighlight").hidden = !total;
   document.querySelector('[data-transition-row][data-for="makeHighlight"]').hidden = !total;
   document.querySelector('[data-hl-range][data-for="makeHighlight"]').hidden = !total; // 入れる長さ（作る前に変えられる）
-  if (total) $("makeHighlight").textContent = `⚡ 得点ハイライトを作る（約 ${clock(Math.ceil(total))}）`;
+  if (total) setIconText($("makeHighlight"), "zap", `得点ハイライトを作る（約 ${clock(Math.ceil(total))}）`, false);
 }
 $("makeHighlight").addEventListener("click", () => {
   const pieces = highlightPieces();
@@ -258,7 +259,7 @@ $("makeHighlight").addEventListener("click", () => {
   $("playback").pause();
   // 結果の札：いちばんあとに撮った回の、止めたときのスコア
   const lastTake = Math.max(...liveGoals.map((g) => g.take));
-  renderPieces(pieces, { overlay: false, kind: "highlight", title: "⚡ ハイライトを作っています…", result: takeEnd[lastTake] || { us: state.us, them: state.them } });
+  renderPieces(pieces, { overlay: false, kind: "highlight", title: "ハイライトを作っています…", result: takeEnd[lastTake] || { us: state.us, them: state.them } });
 });
 
 // ---- LINE で送る用（5分まで）：5分をこえる1本ができたとき、最初の5分・5分ごと・最後の5分を、あとから書き出す ----
@@ -289,25 +290,25 @@ document.querySelectorAll("[data-cut]").forEach((b) =>
     $("playback").pause();
     // 結果の札（最初に入れるとき）：撮った回なら止めたときのスコア、撮った動画にの書き出しなら入れた点の最後
     const result = c.kind === "shot" ? takeEnd[c.take] || { us: state.us, them: state.them } : { us: state.us, them: state.them };
-    renderPieces(pieces, { overlay: false, kind: "cut", title: `✂️ ${CUT_LABELS[mode]}を書き出しています…`, result, split: mode === "split", label: CUT_LABELS[mode] });
+    renderPieces(pieces, { overlay: false, kind: "cut", title: `${CUT_LABELS[mode]}を書き出しています…`, result, split: mode === "split", label: CUT_LABELS[mode] });
   })
 );
 
 // ---- 書き出し中の画面：動き（しま模様のバー・書き出しているところ）とプチ情報、画面を離れないように ----
 const EXPORT_TIPS = [
-  "⚡ ハイライトに入れる長さ（何秒前〜何秒後）は、💾 保存の設定で変えられます",
-  "🎉 得点のエフェクトは、アイコンと文字を変えられます（サッカー以外でも）",
-  "💾 保存の設定で、LINE で送れるよう 5分ずつに分けることもできます",
-  "🏷 結果の札を「最初」にすると、LINE などのサムネに結果が出ます",
+  "ハイライトに入れる長さ（何秒前〜何秒後）は、「保存の設定」で変えられます",
+  "得点のエフェクトは、アイコンと文字を変えられます（サッカー以外でも）",
+  "「保存の設定」で、LINE で送れるよう 5分ずつに分けることもできます",
+  "結果の札を「最初」にすると、LINE などのサムネに結果が出ます",
   "⭐ ナイスを押すと、得点板の下に「⭐ ナイス！」が出ます",
-  "✂️ 5分をこえたら、保存の画面で「最初の5分」なども作れます",
-  "▶ 撮った動画に得点板をつけるとき、「見ながら記録」なら見終わったら完成します",
-  "🔒 動画はこの端末の中だけで使います。どこにも送りません",
-  "⚽ チーム名と色は、さくせん盤と共通です",
-  "🎞 撮っておいた動画にも、あとから得点板をつけられます",
-  "↺ 速く流して点を通りすぎたら「10秒」でもどれます",
-  "⇄ 後半にコートが変わったら、左右を入れかえられます",
-  "🎬 ハイライトのつなぎ目には RoQga の柄が入ります（「なし」にもできます）"
+  "5分をこえたら、保存の画面で「最初の5分」なども作れます",
+  "撮った動画に得点板をつけるとき、「見ながら記録」なら見終わったら完成します",
+  "動画はこの端末の中だけで使います。どこにも送りません",
+  "チーム名と色は、さくせん盤と共通です",
+  "撮っておいた動画にも、あとから得点板をつけられます",
+  "速く流して点を通りすぎたら「10秒」でもどれます",
+  "後半にコートが変わったら、左右を入れかえられます",
+  "ハイライトのつなぎ目には RoQga の柄が入ります（「なし」にもできます）"
 ];
 let tipTimer = 0;
 let tipIndex = Math.floor(Math.random() * EXPORT_TIPS.length);

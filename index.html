@@ -45,9 +45,9 @@
   <p class="ls-brand-copy">撮った試合も、取った点も、とっておき</p>
   <!-- 2つの使い方：いま撮る（カメラ）／撮っておいた動画に、あとから得点板を付ける。チーム・色・プレビューは共通 -->
   <div class="ls-tabs mode-tabs" role="tablist" aria-label="使い方">
-    <button class="ls-tab" type="button" role="tab" data-mode="shoot" aria-selected="true">📹 撮りながら</button>
-    <button class="ls-tab" type="button" role="tab" data-mode="later" aria-selected="false">🎞 撮った動画に</button>
-    <button class="ls-tab" type="button" role="tab" data-mode="merge" aria-selected="false">🔗 つなぐ</button>
+    <button class="ls-tab" type="button" role="tab" data-mode="shoot" aria-selected="true"><span class="ls-icon in-text" data-icon="video" aria-hidden="true"></span>撮りながら</button>
+    <button class="ls-tab" type="button" role="tab" data-mode="later" aria-selected="false"><span class="ls-icon in-text" data-icon="film" aria-hidden="true"></span>撮った動画に</button>
+    <button class="ls-tab" type="button" role="tab" data-mode="merge" aria-selected="false"><span class="ls-icon in-text" data-icon="link" aria-hidden="true"></span>つなぐ</button>
   </div>
   <!-- チーム：得点板と同じく、左のチーム・右のチーム（自分のチームの試合とはかぎらないので「自チーム・相手」とは呼ばない。
        ⇄ で入れかえると、ラベルも並びに合わせて変わる）。チーム名の枠の中の左に色の丸 [● チーム名]。
@@ -91,18 +91,18 @@
   <!-- スコアを変える：試合の途中から撮るときに、いまの点を入れておく（各チームの下に − ＋ が出る）。
        0 - 0 にするは、点があるときだけ（次の試合の前に） -->
   <p class="score-edit">
-    <button id="editScore" class="link" type="button" aria-expanded="false">✏️ スコアを変える（途中からのとき）</button>
+    <button id="editScore" class="link" type="button" aria-expanded="false"><span class="ls-icon in-text" data-icon="edit" aria-hidden="true"></span>スコアを変える（途中からのとき）</button>
     <button id="resetScore" class="link" type="button" hidden>0 - 0 にする</button>
   </p>
   <!-- 得点板のプレビューと GOAL のエフェクト：たたんだ欄（開くと、動画に入る得点板を見ておける。エフェクトははじめから出す（「出さない」にもできる）） -->
   <details id="previewFold" class="ls-fold">
-    <summary><span class="ls-fold-icon" aria-hidden="true">👀</span><span class="fold-title">プレビュー・得点板と演出</span><span id="fxMeta" class="meta"></span></summary>
+    <summary><span class="ls-fold-icon ls-icon" data-icon="view" aria-hidden="true"></span><span class="fold-title">プレビュー・得点板と演出</span><span id="fxMeta" class="meta"></span></summary>
     <div class="ls-fold-body">
     <!-- 2つのプレビュー：📹 撮る画面（録画中に見える画面：得点板・＋1／−1・⭐・録画ボタン。＋1 の位置の設定どおり）と、
          💾 保存される動画（結果の札 → 試合 → GOAL → つなぎ目 → 結果の札 の流れを、設定どおりにくりかえす）。アプリ版と同じ -->
     <div class="seg preview-tabs" role="tablist" aria-label="プレビュー">
-      <button class="chip" type="button" role="tab" data-preview="shoot" aria-selected="true">📹 撮る画面</button>
-      <button class="chip" type="button" role="tab" data-preview="saved" aria-selected="false">💾 保存される動画</button>
+      <button class="chip" type="button" role="tab" data-preview="shoot" aria-selected="true"><span class="ls-icon in-text" data-icon="video" aria-hidden="true"></span>撮る画面</button>
+      <button class="chip" type="button" role="tab" data-preview="saved" aria-selected="false"><span class="ls-icon in-text" data-icon="save" aria-hidden="true"></span>保存される動画</button>
     </div>
     <div class="preview-frame">
       <canvas id="preview" class="preview" width="1280" height="720" aria-label="プレビュー"></canvas>
@@ -126,7 +126,7 @@
       <div class="seg" role="radiogroup" aria-label="得点のエフェクト">
         <button class="chip" type="button" role="radio" data-goal-fx="off">出さない</button>
         <button class="chip" type="button" role="radio" data-goal-fx="on">出す</button>
-        <button id="tryGoal" class="chip" type="button">▶ 試す</button>
+        <button id="tryGoal" class="chip" type="button"><span class="ls-icon in-text" data-icon="play" aria-hidden="true"></span>試す</button>
       </div>
     </div>
     <!-- エフェクトのアイコンと文字（サッカー以外でも。文字が空なら GOAL!）。入力枠の中の左にアイコン [⚽ GOAL!]（チームの色と同じ形。Q キットの ls-pickfield）。
@@ -156,7 +156,7 @@
       <div class="seg" role="radiogroup" aria-label="⭐ ナイスのエフェクト">
         <button class="chip" type="button" role="radio" data-nice-fx="off">出さない</button>
         <button class="chip" type="button" role="radio" data-nice-fx="on">出す</button>
-        <button id="tryNice" class="chip" type="button">▶ 試す</button>
+        <button id="tryNice" class="chip" type="button"><span class="ls-icon in-text" data-icon="play" aria-hidden="true"></span>試す</button>
       </div>
     </div>
     </div>
@@ -164,7 +164,7 @@
   </details>
   <!-- 保存の設定：長い動画を1本のまま残すか、5分ごとに分けるか（LINE のトークで送れる動画は5分まで）。はじめは1本のまま -->
   <details id="saveFold" class="ls-fold">
-    <summary><span class="ls-fold-icon" aria-hidden="true">💾</span><span class="fold-title">保存の設定</span><span id="splitMeta" class="meta"></span></summary>
+    <summary><span class="ls-fold-icon ls-icon" data-icon="save" aria-hidden="true"></span><span class="fold-title">保存の設定</span><span id="splitMeta" class="meta"></span></summary>
     <div class="ls-fold-body">
     <div class="split">
       <span class="split-label">5分をこえる動画</span>
@@ -218,14 +218,14 @@
       </div>
     </div>
     <label class="ls-field"><span class="ls-label">ファイルの名前（分けたときは part1・part2…）</span><input id="mergeName" class="ls-input" maxlength="20" placeholder="ハイライト" autocomplete="off" enterkeyhint="done"></label>
-    <button id="mergeExport" class="ls-button is-primary is-block" type="button" disabled>🔗 つないで書き出す</button>
+    <button id="mergeExport" class="ls-button is-primary is-block" type="button" disabled><span class="ls-icon" data-icon="link" aria-hidden="true"></span>つないで書き出す</button>
     <p id="mergeNote" class="hint"></p>
   </section>
-  <button id="openCamera" class="ls-button is-primary is-block" type="button" data-mode-only="shoot">📹 カメラを開く</button>
+  <button id="openCamera" class="ls-button is-primary is-block" type="button" data-mode-only="shoot"><span class="ls-icon" data-icon="video" aria-hidden="true"></span>カメラを開く</button>
   <!-- 撮った動画に（得点板をつける）：端末の動画を選ぶ（動画はこの端末の中だけで使う） -->
-  <button id="pickVideo" class="ls-button is-primary is-block" type="button" data-mode-only="later" hidden>🎞 動画を選ぶ</button>
+  <button id="pickVideo" class="ls-button is-primary is-block" type="button" data-mode-only="later" hidden><span class="ls-icon" data-icon="film" aria-hidden="true"></span>動画を選ぶ</button>
   <!-- 撮った動画にの画面から「← 戻る」でもどっても、選んだ動画と入れた点は残す。ここから続きにもどれる（editor.js の showResume） -->
-  <button id="resumeEdit" class="ls-button is-block" type="button" hidden>🎞 さっきの動画にもどる</button>
+  <button id="resumeEdit" class="ls-button is-block" type="button" hidden><span class="ls-icon" data-icon="film" aria-hidden="true"></span>さっきの動画にもどる</button>
   <input id="videoFile" type="file" accept="video/*" hidden>
   <!-- 録った動画があるときだけ：保存の画面をもう一度開く（はじめの画面にもどっても、0 - 0 から撮っても残っている。消すのは動画の行の 🗑） -->
   <button id="openSaved" class="ls-button is-block" type="button" hidden></button>
@@ -264,7 +264,7 @@
   <div class="tools">
     <!-- 倒して撮るときだけ：倒す向きを逆に（左に倒す ↔ 右に倒す。選びまちがえたとき）。ごちゃつかないよう小さな丸の印だけ -->
     <button id="turnFlip" class="small icon-btn" type="button" hidden aria-label="倒す向きを逆にする" title="倒す向きを逆にする">⇅</button>
-    <button id="back" class="small icon-btn" type="button" aria-label="はじめの画面にもどる" title="はじめの画面にもどる">🏠</button>
+    <button id="back" class="small icon-btn" type="button" aria-label="はじめの画面にもどる" title="はじめの画面にもどる"><span class="ls-icon" data-icon="home" aria-hidden="true"></span></button>
     <!-- ＋1 の位置（まんなか → 左よせ → 右よせ をくり返す）。小さな丸に3つの点、いまの位置の点だけ白く。押すとすぐボタンが動く -->
     <button id="handToggle" class="small icon-btn hand-toggle" type="button"><i></i><i></i><i></i></button>
   </div>
@@ -277,7 +277,7 @@
       <button class="turn-btn" type="button" data-turn="right"><span class="phone is-right" aria-hidden="true"></span>右に倒す</button>
     </div>
     <!-- 横にできないとき・やめたいときに、ここからも戻れるように（右上の 🏠 はこの画面の下にかくれる） -->
-    <button id="rotateHome" class="rotate-home" type="button">🏠 はじめの画面へ</button>
+    <button id="rotateHome" class="rotate-home" type="button"><span class="ls-icon in-text" data-icon="home" aria-hidden="true"></span>はじめの画面へ</button>
   </div>
   <!-- はじめて撮る画面を開いたときだけ：ボタンの使い方（「わかった」で閉じ、この端末では次から出さない） -->
   <div id="studioTip" class="studio-tip" hidden>
@@ -298,7 +298,7 @@
 <section id="editor" class="editor" hidden>
   <div class="editor-bar">
     <button id="editBack" class="small" type="button">← 戻る</button>
-    <span class="editor-title">🎞 撮った動画に得点板をつける</span>
+    <span class="editor-title"><span class="ls-icon in-text" data-icon="film" aria-hidden="true"></span>撮った動画に得点板をつける</span>
     <!-- いまの記録のしかた（見ながら記録中／じっくり記録）。じっくり記録のときは押すと選びなおせる -->
     <button id="editModeChip" class="mode-chip" type="button" hidden></button>
   </div>
@@ -314,7 +314,7 @@
     <p class="edit-mode-title">どうやって点を入れる？</p>
     <!-- 左右に並べて、同じ段に同じことがら（完成 → 時間（2行目に、ハイライトも作るときに足される時間。ハイライトは作りたいときだけ）→ 一時停止 → 再生位置 → 再生の速さ → あとで直す）を置き、横に見くらべられるように -->
     <button id="quickStart" class="mode-card is-primary" type="button">
-      <b>▶ 見ながら記録</b>
+      <b><span class="ls-icon in-text" data-icon="play" aria-hidden="true"></span>見ながら記録</b>
       <small>すぐできる</small>
       <span class="pt is-good">見終わったら完成</span>
       <em><span id="quickLen"></span><i class="pt-note" data-hl-each data-hl-pre="ハイライトを作るなら"></i></em>
@@ -324,7 +324,7 @@
       <span class="pt is-bad">あとで直せない</span>
     </button>
     <button id="slowStart" class="mode-card" type="button">
-      <b>✏️ じっくり記録</b>
+      <b><span class="ls-icon in-text" data-icon="edit" aria-hidden="true"></span>じっくり記録</b>
       <small>あとで書き出す</small>
       <span class="pt is-bad">もう1回流して完成</span>
       <em><span id="slowLen"></span><i class="pt-note" data-hl-each data-hl-pre="ハイライトを作るなら"></i></em>
@@ -366,21 +366,21 @@
   <ol id="editEvents" class="edit-events"></ol>
   <!-- 🎉 得点のエフェクト：はじめの画面と同じ設定（出さない／出す／▶ 試す・アイコン・文字）。中身ははじめの画面の #fxControls を開いているあいだだけ移す -->
   <details id="editFxFold" class="edit-fx">
-    <summary><span>🎉 得点板と演出</span><span id="editFxMeta" class="meta"></span></summary>
+    <summary><span><span class="ls-icon in-text" data-icon="celebrate" aria-hidden="true"></span>得点板と演出</span><span id="editFxMeta" class="meta"></span></summary>
     <div id="editFxBody" class="edit-fx-body"></div>
   </details>
   <!-- 何を書き出す？：全部か ⚡ ハイライト（得点・⭐ の何秒前〜何秒後をつなぐ。はじめは 10秒前〜6秒後。撮るときの得点ハイライトと同じ）。
        得点板を出すかは「🎉 得点板と演出」で。長さの目安は editor.js の showExportRange -->
   <p class="export-mode-title">何を書き出す？</p>
   <div class="export-modes" role="radiogroup" aria-label="書き出すもの">
-    <button type="button" role="radio" data-export-mode="all" aria-checked="true"><span class="em-icon">📼</span><span class="em-text"><b>全部</b><small>試合まるごと</small></span><em data-em-len="all"></em></button>
-    <button type="button" role="radio" data-export-mode="hl" aria-checked="false"><span class="em-icon">⚡</span><span class="em-text"><b>ハイライト</b><small>得点・⭐ の前後だけをつなぐ</small></span><em data-em-len="hl"></em></button>
+    <button type="button" role="radio" data-export-mode="all" aria-checked="true"><span class="em-icon ls-icon" data-icon="film" aria-hidden="true"></span><span class="em-text"><b>全部</b><small>試合まるごと</small></span><em data-em-len="all"></em></button>
+    <button type="button" role="radio" data-export-mode="hl" aria-checked="false"><span class="em-icon ls-icon" data-icon="zap" aria-hidden="true"></span><span class="em-text"><b>ハイライト</b><small>得点・⭐ の前後だけをつなぐ</small></span><em data-em-len="hl"></em></button>
   </div>
   <p id="exportModeHint" class="export-mode-hint" hidden>ハイライトは、＋1 か ⭐ を入れると選べます</p>
   <!-- ⚡ ハイライトのつなぎ目の柄（⚡ ハイライトを選んだときだけ）。ボタンは draw.js の TRANSITIONS から作る（setup.js） -->
   <div class="hl-range" data-hl-range hidden></div>
   <div class="transition-row" data-transition-row hidden><span>つなぎ目</span><div class="transition-chips" role="radiogroup" aria-label="ハイライトのつなぎ目"></div></div>
-  <button id="editExport" class="ls-button is-primary is-block" type="button">📼 得点板つきで書き出す</button>
+  <button id="editExport" class="ls-button is-primary is-block" type="button"><span class="ls-icon" data-icon="film" aria-hidden="true"></span>得点板つきで書き出す</button>
   <p class="hint editor-hint">点が入ったところで ＋1。書き出すあいだは、この画面のままで。</p>
   </div>
 </section>
@@ -394,8 +394,8 @@
   <div class="export-bar" aria-hidden="true"><i id="exportBar"></i></div>
   <p id="exportProg" class="export-prog"></p>
   <!-- 画面を離れないように（ブラウザは、ほかのアプリ・タブに切りかえると動画が止まり、書き出しも止まる） -->
-  <p class="export-stay"><span class="stay-icon" aria-hidden="true">📵</span><b>終わるまで、この画面のままで</b><small>ほかのアプリ・タブに切りかえたり、画面を消したりすると止まることがあります</small></p>
-  <p id="exportAway" class="export-away" hidden>⚠️ さっき画面を離れたので、そのあいだの動画が止まっているかもしれません。おかしいときは、書き出しなおしてね。</p>
+  <p class="export-stay"><span class="stay-icon ls-icon" data-icon="app" aria-hidden="true"></span><b>終わるまで、この画面のままで</b><small>ほかのアプリ・タブに切りかえたり、画面を消したりすると止まることがあります</small></p>
+  <p id="exportAway" class="export-away" hidden><span class="ls-icon in-text" data-icon="warn" aria-hidden="true"></span>さっき画面を離れたので、そのあいだの動画が止まっているかもしれません。おかしいときは、書き出しなおしてね。</p>
   <!-- プチ情報：待っているあいだに、ろくがの使い方をひとこと（6秒ごとに入れかわる） -->
   <p id="exportTip" class="export-tip" aria-live="polite"></p>
   <button id="exportCancel" class="ls-button is-block" type="button">やめる</button>
@@ -417,7 +417,7 @@
       <!-- 保存のしかた（iPhone は「ビデオを保存」で写真へ。端末によって出し分ける） -->
       <p id="saveGuide" class="guide" hidden></p>
       <!-- 何本かあるときは、まず「まとめて保存・共有」（1本ずつ保存すると、LINE の中などでは残りが消えることがあるため） -->
-      <button id="shareAll" class="ls-button is-primary is-block" type="button" hidden>📤 まとめて保存・共有</button>
+      <button id="shareAll" class="ls-button is-primary is-block" type="button" hidden><span class="ls-icon" data-icon="share" aria-hidden="true"></span>まとめて保存・共有</button>
       <!-- 5分ごとに分けて5分を超えたとき：どれを残すか（全部・最初の5分・最後の5分＝最後の1本） -->
       <div id="pickClips" class="seg" role="radiogroup" aria-label="どの動画を残すか" hidden>
         <button class="chip" type="button" role="radio" data-pick="all">全部</button>
@@ -426,31 +426,31 @@
       </div>
       <!-- 録った動画（5分ごとに分けたときは何本か）。押すと上で見返せる -->
       <div id="clipList" class="clip-list"></div>
-      <p id="sharedNote" class="shared-note" hidden>✓ 保存・共有できました</p>
+      <p id="sharedNote" class="shared-note" hidden>保存・共有できました</p>
       <!-- LINE で送る用（5分まで）：5分をこえる1本ができたときだけ。最初の5分・5分ごと・最後の5分を、あとから書き出す（render.js の cutSource）。
            ブラウザは流して録るので、最初・最後は約5分、5分ごとは動画の長さだけかかる -->
       <div id="cutRow" class="split cut-row" hidden>
         <span class="split-label">LINE で送る用（5分まで）</span>
         <div class="seg" role="group" aria-label="LINE で送る用に書き出す">
-          <button class="chip" type="button" data-cut="first">✂️ 最初の5分</button>
+          <button class="chip" type="button" data-cut="first"><span class="ls-icon in-text" data-icon="scissors" aria-hidden="true"></span>最初の5分</button>
           <button class="chip" type="button" data-cut="split">5分ごと</button>
-          <button class="chip" type="button" data-cut="last">最後の5分 ✂️</button>
+          <button class="chip" type="button" data-cut="last"><span class="ls-icon in-text" data-icon="scissors" aria-hidden="true"></span>最後の5分</button>
         </div>
         <p class="hint">トークで送れる動画は5分まで。書き出すのに、最初・最後は約5分、5分ごとは動画の長さだけかかります。</p>
       </div>
       <!-- 得点ハイライト：撮っているあいだに ＋1 を押した時間の前後（はじめは 10秒前〜6秒後。変えられる）だけをつないで1本に（得点板はもう入っている） -->
       <div class="hl-range is-light" data-hl-range data-for="makeHighlight" hidden></div>
       <div class="transition-row is-light" data-transition-row data-for="makeHighlight" hidden><span>つなぎ目</span><div class="transition-chips" role="radiogroup" aria-label="ハイライトのつなぎ目"></div></div>
-      <button id="makeHighlight" class="ls-button is-block" type="button" hidden>⚡ 得点ハイライトを作る</button>
+      <button id="makeHighlight" class="ls-button is-block" type="button" hidden><span class="ls-icon" data-icon="zap" aria-hidden="true"></span>得点ハイライトを作る</button>
       <!-- 次はどうする？：3つから選ぶ。それぞれ、押すとどうなるかを1行で。
            続きを撮る（同じチーム・スコアそのまま）／同じチームで 0 - 0 から（次の試合）／はじめの画面へ（チームを変える）。
            どれを選んでも動画は消さない（消すのは動画の行の 🗑。ページを閉じる・更新すると、どのみち消える）。
            共有がすんだら「0 - 0 から」を目立たせる -->
       <div id="nextShot" class="next-shot" role="group" aria-labelledby="nextTitle">
         <p id="nextTitle" class="next-title">次はどうする？</p>
-        <button id="closeSave" class="next-btn" type="button"><b>▶ 続きを撮る</b><span id="nextKeep">いまのスコアのまま（後半など）</span></button>
+        <button id="closeSave" class="next-btn" type="button"><b><span class="ls-icon in-text" data-icon="play" aria-hidden="true"></span>続きを撮る</b><span id="nextKeep">いまのスコアのまま（後半など）</span></button>
         <button id="restartSave" class="next-btn" type="button"><b>⟲ 同じチームで 0 - 0 から</b><span>次の試合（動画はこの画面に残ります）</span></button>
-        <button id="toSetup" class="next-btn" type="button"><b>🏠 はじめの画面へ</b><span>チーム・色を変える（動画は残ります）</span></button>
+        <button id="toSetup" class="next-btn" type="button"><b><span class="ls-icon in-text" data-icon="home" aria-hidden="true"></span>はじめの画面へ</b><span>チーム・色を変える（動画は残ります）</span></button>
       </div>
       <!-- はじめの画面の「🎞 録った動画」から開いたときは、閉じるだけ -->
       <button id="closeSheetOnly" class="ls-button is-block" type="button" hidden>閉じる</button>

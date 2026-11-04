@@ -93,7 +93,7 @@ function startRecording() {
   }
   // カメラが使えていないとき（許可していない・ほかのアプリが使っている）は録画しない
   if (!cameraStream) {
-    notice("カメラが使えません", "🏠 から、もう一度「カメラを開く」を押して、カメラとマイクを許可してね。");
+    notice("カメラが使えません", "家のボタン（はじめの画面へ）から、もう一度「カメラを開く」を押して、カメラとマイクを許可してね。");
     return;
   }
   if (!beginRecording(screen, cameraStream.getAudioTracks())) {
@@ -237,10 +237,10 @@ function showSaveGuide() {
   const canShare = clips.length && navigator.canShare?.({ files: [clips[0].file] });
   $("saveGuide").hidden = !clips.length;
   $("saveGuide").textContent = isIOS && canShare
-    ? "📱 写真へは「📤 保存・共有」→「ビデオを保存」。"
+    ? "写真へは「保存・共有」→「ビデオを保存」。"
     : canShare
-      ? "📱 「📤 保存・共有」で LINE などへ。端末には ⬇️。"
-      : "⬇️ で端末に保存。";
+      ? "「保存・共有」で LINE などへ。端末にはダウンロードのボタンで。"
+      : "ダウンロードのボタンで端末に保存。";
   // 端末の中に残せるとき（keep.js）は 7日まで残る。残せないブラウザでは、ページを閉じると消える
   // つないだ動画は残さない（keep.js の keepable）
   const merged = clips.some((c) => c.kind === "merge");
@@ -248,12 +248,12 @@ function showSaveGuide() {
     typeof keepReady !== "undefined" && keepReady && !keepCrashed
       ? merged
         ? "撮った動画はこのブラウザに7日まで残ります。つないだ動画は、ページを閉じると消えます（すぐつなぎなおせます）。"
-        : "このブラウザに7日まで残ります（🗑 で消せます）。"
+        : "このブラウザに7日まで残ります（ごみ箱のボタンで消せます）。"
       : "ページを閉じると消えます。";
   // LINE の中では、1本保存するとページが開きなおされ、残りが消えることがある
   if (inLine && clips.length > 1)
     $("saveGuide").textContent += canShare
-      ? "LINE 版では1本ずつ保存すると残りが消えることがあるので、「📤 まとめて保存・共有」で。"
+      ? "LINE 版では1本ずつ保存すると残りが消えることがあるので、「まとめて保存・共有」で。"
       : "LINE 版では1本保存すると残りが消えることがあります。Safari・Chrome で撮るのがおすすめです。";
 }
 
@@ -283,26 +283,31 @@ function renderClips() {
       row.className = "clip";
       const sameTake = clips.filter((x) => x.take === c.take);
       const size = `（${(c.blob.size / 1024 / 1024).toFixed(1)}MB）${c.saved ? "　✓" : ""}`;
+      const kindIcon = { highlight: "zap", merge: "link", cut: "scissors", edit: "film" }[c.kind] || "";
       const label =
         c.kind === "highlight"
-          ? `⚡ ハイライト　${clock(c.to - c.from)}${size}`
+          ? `ハイライト　${clock(c.to - c.from)}${size}`
           : c.kind === "merge"
-            ? `🔗 ${c.label || "ハイライト"}　${sameTake.length > 1 ? `${sameTake.indexOf(c) + 1}/${sameTake.length}　` : ""}${clock(c.to - c.from)}${size}`
+            ? `${c.label || "ハイライト"}　${sameTake.length > 1 ? `${sameTake.indexOf(c) + 1}/${sameTake.length}　` : ""}${clock(c.to - c.from)}${size}`
           : c.kind === "cut"
-            ? `✂️ ${c.label}　${sameTake.length > 1 ? `${sameTake.indexOf(c) + 1}本目　` : ""}${clock(c.to - c.from)}${size}`
+            ? `${c.label}　${sameTake.length > 1 ? `${sameTake.indexOf(c) + 1}本目　` : ""}${clock(c.to - c.from)}${size}`
           : c.kind === "edit"
-            ? `🎞 撮った動画に得点板をつけた動画　${sameTake.length > 1 ? `${sameTake.indexOf(c) + 1}本目　` : ""}${clock(c.from)}〜${clock(c.to)}${size}`
+            ? `撮った動画に得点板をつけた動画　${sameTake.length > 1 ? `${sameTake.indexOf(c) + 1}本目　` : ""}${clock(c.from)}〜${clock(c.to)}${size}`
             : `${shotTakes().length > 1 ? `${takeNumber(c.take)}回目　` : ""}${sameTake.length > 1 ? `${sameTake.indexOf(c) + 1}本目　` : ""}${clock(c.from)}〜${clock(c.to)}${size}`;
-      const play = Object.assign(document.createElement("button"), { type: "button", className: "clip-play", textContent: label });
+      const play = Object.assign(document.createElement("button"), { type: "button", className: "clip-play" });
+      setIconText(play, kindIcon, label);
       play.addEventListener("click", () => showClip(i));
-      const share = Object.assign(document.createElement("button"), { type: "button", className: "clip-btn", textContent: "📤 保存・共有" });
+      const share = Object.assign(document.createElement("button"), { type: "button", className: "clip-btn" });
+      setIconText(share, "share", "保存・共有");
       share.hidden = !navigator.canShare?.({ files: [c.file] });
       share.addEventListener("click", () => shareFiles([c]));
-      const down = Object.assign(document.createElement("a"), { className: "clip-btn", href: c.url, download: c.file.name, textContent: "⬇️" });
+      const down = Object.assign(document.createElement("a"), { className: "clip-btn", href: c.url, download: c.file.name });
+      down.append(lineIcon("save", false));
       down.setAttribute("aria-label", `${c.file.name} をダウンロード`);
       down.addEventListener("click", () => markSaved([c]));
       row.dataset.index = String(i);
-      const del = Object.assign(document.createElement("button"), { type: "button", className: "clip-btn", textContent: "🗑" });
+      const del = Object.assign(document.createElement("button"), { type: "button", className: "clip-btn" });
+      del.append(lineIcon("delete", false));
       del.setAttribute("aria-label", `${c.file.name} を消す`);
       del.addEventListener("click", () => deleteClip(c));
       row.append(play, share, down, del);
@@ -321,7 +326,7 @@ function renderClips() {
     // 1本のままで5分をこえたら：LINE のトークでは送れないことがある（同じ画面の「LINE で送る用」（cutRow）で5分までを作れる）
     now.length === 1 && now[0].to - now[0].from > 300 ? "5分をこえているので、LINE のトークでは送れないことがあります。下の「LINE で送る用」で、5分までの動画を作れます。" : "",
     earlier ? `前の動画（${earlier}本）も下にあります。` : "",
-    tooBig && files.length > 1 ? "大きいので、1本ずつ「📤 保存・共有」してね（まとめてだと、ページが落ちることがあります）。" : ""
+    tooBig && files.length > 1 ? "大きいので、1本ずつ「保存・共有」してね（まとめてだと、ページが落ちることがあります）。" : ""
   ].filter(Boolean).join("");
   if (shown.length) showClip(shown[shown.length - 1]);
 }
@@ -387,7 +392,7 @@ const takeNumber = (t) => shotTakes().indexOf(t) + 1;
 
 // 保存・共有がすんだら（写真に保存したのか送ったのかは分からないので、両方の言い方で）：「✓ 保存・共有できました」と、「0 - 0 から撮りなおす」を目立たせる（次の試合へ）
 function markShared() {
-  $("sharedNote").textContent = seasonal("✓ 保存・共有できました");
+  setIconText($("sharedNote"), "check", seasonal("保存・共有できました"));
   $("sharedNote").hidden = false;
   $("restartSave").classList.add("is-suggest");
 }
@@ -409,7 +414,7 @@ $("toSetup").addEventListener("click", () => {
 // はじめの画面の「🎞 録った動画（◯本）」：録った動画があるときだけ出し、押すと保存の画面（閉じるだけ）
 function showOpenSaved() {
   $("openSaved").hidden = !clips.length;
-  $("openSaved").textContent = `🎞 録った動画（${clips.length}本）`;
+  setIconText($("openSaved"), "film", `録った動画（${clips.length}本）`);
 }
 $("openSaved").addEventListener("click", () => openSaveSheet(false));
 $("closeSheetOnly").addEventListener("click", () => {

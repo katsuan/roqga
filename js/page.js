@@ -21,6 +21,20 @@
 
 // id から画面の部品を返す
 const $ = (id) => document.getElementById(id);
+// Q キットの線アイコン（<span class="ls-icon" data-icon="…">）を作る。CSS だけで出るので、Q キットの ui.js を待たなくてよい。
+// inText は、文の頭に置くとき（字との間をあける）
+function lineIcon(name, inText = true) {
+  const s = document.createElement("span");
+  s.className = inText ? "ls-icon in-text" : "ls-icon";
+  s.dataset.icon = name;
+  s.setAttribute("aria-hidden", "true");
+  return s;
+}
+// el の中身を「線アイコン＋文字」にする（name がなければ文字だけ）
+function setIconText(el, name, text, inText = true) {
+  el.textContent = text;
+  if (name) el.prepend(lineIcon(name, inText));
+}
 // LINE の中のブラウザで開いているか（LINE の中では、保存するとページが開きなおされ、録った動画が消えることがある）
 const inLine = /\bLine\//i.test(globalThis.navigator?.userAgent || "");
 // 数を2けたの文字にする（5 → "05"）

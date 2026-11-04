@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => pendingMatch && window.LineS
 document.addEventListener("DOMContentLoaded", () =>
   window.LineShareUI?.firstTip(
     "roqga",
-    ["チーム名と色を決める（さくせん盤と共通）", "📹 撮りながら：横にして撮り、点が入ったら ＋1", "🎞 撮った動画に：あとから得点板を入れる"],
+    ["チーム名と色を決める（さくせん盤と共通）", "「撮りながら」：横にして撮り、点が入ったら ＋1", "「撮った動画に」：あとから得点板を入れる"],
     document.querySelector(".teams")
   )
 );

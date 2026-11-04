@@ -185,11 +185,11 @@ test("共有できたら、本数を記録する（やめたときは記録し�
 test("共有できたら、季節の絵文字がつくことがある（QSeason がなくても動く）", () => {
   const { run, $el } = boot();
   run("window.QSeason = undefined; markShared();");
-  assert.equal($el("sharedNote").textContent, "✓ 保存・共有できました");
+  assert.equal($el("sharedNote").textContent, "保存・共有できました");
   run("window.QSeason = { decorate: (t) => t + ' 🎃' }; markShared();");
-  assert.equal($el("sharedNote").textContent, "✓ 保存・共有できました 🎃");
+  assert.equal($el("sharedNote").textContent, "保存・共有できました 🎃");
   run("window.QSeason = { decorate() { throw new Error('x'); } }; markShared();");
-  assert.equal($el("sharedNote").textContent, "✓ 保存・共有できました");
+  assert.equal($el("sharedNote").textContent, "保存・共有できました");
 });
 
 test("書き出せる動画が1本もなかったときは、「書き出した」と記録しない", async () => {
@@ -212,12 +212,12 @@ test("動画のファイル名：日時と、分けたときの番号・ハイ�
 });
 
 // 動画の共有はスマホの共有メニュー（navigator.share）で、おくるんを通らない。おくるんのマーク（is-oqrn）は付けない（Q の決まり F1）
-test("動画の「保存・共有」は 📤 のまま、おくるんのマークは付けない", () => {
+test("動画の「保存・共有」は共有の線アイコン（Q キットの share）で、おくるんのマークは付けない", () => {
   const html = fs.readFileSync(path.join(__dirname, "../index.html"), "utf8");
   const src = fs.readFileSync(path.join(__dirname, "../js/record.js"), "utf8");
   assert.ok(!/is-oqrn/.test(html + src));
-  assert.match(html, />📤 まとめて保存・共有</);
-  assert.match(src, /textContent: "📤 保存・共有"/);
+  assert.match(html, /data-icon="share" aria-hidden="true"><\/span>まとめて保存・共有</);
+  assert.match(src, /setIconText\(share, "share", "保存・共有"\)/);
 });
 
 // ファイルの名前の決まり（q-oqrn/docs/structure.md）：入口は app.js、部品は js/ に役わりの名前。

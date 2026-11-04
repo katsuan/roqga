@@ -73,7 +73,7 @@ function keepClips() {
   if (!list.length) return;
   const note = $("keepNote");
   note.hidden = false;
-  note.textContent = "⏳ 読みなおしても消えないよう、この端末に残しています…（終わるまで、保存・共有は待ってね）";
+  note.textContent = "読みなおしても消えないよう、この端末に残しています…（終わるまで、保存・共有は待ってね）";
   // 残しているあいだは、保存・共有を押せないように（同時に動画を読みこむと、iPhone ではメモリが足りずにタブが落ちることがある）
   document.body.classList.add("is-keeping");
   // 長くかかりすぎたら（入れ物が返事をしないなど）、待たずに押せるようにもどす
@@ -88,7 +88,7 @@ function keepClips() {
       if (!ok) c.keepId = null; // いっぱいなど：この動画はページの中だけ
     }
     const kept = list.every((c) => c.keepId || !clips.includes(c));
-    note.textContent = kept ? "✓ この端末に残しました（保存・共有のあとにページが読みなおされても消えません）" : "";
+    note.textContent = kept ? "この端末に残しました（保存・共有のあとにページが読みなおされても消えません）" : "";
     note.hidden = !kept;
     clearTimeout(giveUp);
     document.body.classList.remove("is-keeping");

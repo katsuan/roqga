@@ -221,14 +221,14 @@ $("record").addEventListener("click", () => (recording ? stopRecording() : start
 $("openCamera").addEventListener("click", async () => {
   const button = $("openCamera");
   if (button.disabled) return;
-  const label = button.textContent;
+  const label = [...button.childNodes]; // 線アイコン＋「カメラを開く」。終わったらもどす
   button.disabled = true;
-  button.textContent = "📹 カメラを開いています…";
+  setIconText(button, "video", "カメラを開いています…", false);
   try {
     await openCamera();
     if (cameraStream) logUse("camera"); // 📹 撮りながらでカメラを開けた
   } finally {
     button.disabled = false;
-    button.textContent = label;
+    button.replaceChildren(...label);
   }
 });
