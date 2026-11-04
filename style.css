@@ -407,8 +407,6 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .export-modes button[aria-checked="true"] { border-color: #5cc27a; background: rgba(92, 194, 122, 0.18); }
 .export-modes button:disabled { opacity: 0.4; cursor: default; }
 .em-icon { font-size: 22px; text-align: center; }
-/* 文の頭の線アイコン：字との間（Q キットの ls-button の中は gap があるので付けない） */
-.in-text { margin-right: 4px; }
 .em-icon.ls-icon { width: 24px; height: 24px; justify-self: center; }
 .stay-icon.ls-icon { width: 28px; height: 28px; }
 .em-text { display: grid; gap: 0; min-width: 0; }
@@ -420,11 +418,6 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 /* ---- 暗い表示（index.html の data-ls-dark="auto"。Q キットの色は ui.css が暗くする） ----
  * はじめの画面・保存のシート・あとから入れる画面だけ。撮る画面（カメラの上）は、いまのまま。
  */
-/* ---- Q キットの部品の上書き（Q キットがそろえたら消す） ----
- * 選んでいるチップは、色の面ではなく濃いふちと字で（Q キットはまだツールの色。ユーザーが選んだ形。Q キットがそろえたら消す）
- */
-.ls-chip[aria-pressed="true"]:not(.color), .ls-chip[aria-checked="true"]:not(.color), .ls-chip.is-active:not(.color), .ls-chip:has(input:checked):not(.color) { border-color: var(--ls-text); background: var(--ls-surface); color: var(--ls-text); }
-
 @media (prefers-color-scheme: dark) {
   :root[data-ls-dark="auto"] {
     --ink: #e9efe9;

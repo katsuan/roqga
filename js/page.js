@@ -31,7 +31,7 @@ const $ = (id) => document.getElementById(id);
 // inText は、文の頭に置くとき（字との間をあける）
 function lineIcon(name, inText = true) {
   const s = document.createElement("span");
-  s.className = inText ? "ls-icon in-text" : "ls-icon";
+  s.className = inText ? "ls-icon is-text" : "ls-icon";
   s.dataset.icon = name;
   s.setAttribute("aria-hidden", "true");
   return s;
