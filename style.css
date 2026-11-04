@@ -33,9 +33,9 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 
 /* はじめの画面 */
 .setup { display: grid; gap: 16px; max-width: 520px; margin: 0 auto; padding: 24px 16px 48px; }
-/* 見出しの行は Q キット（ls-brand）。アイコンの角だけ丸く、ひとことは緑 */
+/* 見出しの行は Q キット（ls-brand）。アイコンの角だけ丸く、ひとことはうすい字（色はカメラのボタンだけ） */
 .ls-brand-icon { width: 28px; height: 28px; border-radius: 7px; }
-.ls-brand-copy { margin-top: -8px; color: var(--accent); font-size: 13px; }
+.ls-brand-copy { margin-top: -8px; color: var(--ink-soft); font-size: 13px; font-weight: 600; }
 /* チームは左右に（左のチーム・右のチーム。得点板と同じ並び） */
 .teams { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; }
 .teams .team-col[data-side="us"] { order: 1; }
@@ -216,7 +216,7 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .next-btn.is-suggest { border-color: var(--accent); background: #eef7f0; color: #1f3a28; }
 .next-btn.is-suggest span { color: #4b6455; }
 .next-btn:active { transform: scale(0.98); }
-.shared-note { color: var(--accent); font-weight: 800; text-align: center; }
+.shared-note { color: var(--ink); font-weight: 800; }
 .playback { width: 100%; max-height: 50vh; border-radius: 10px; background: #000; }
 
 /* LINE の5分に合わせた区切り方 */
@@ -424,6 +424,12 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 /* ---- 暗い表示（index.html の data-ls-dark="auto"。Q キットの色は ui.css が暗くする） ----
  * はじめの画面・保存のシート・あとから入れる画面だけ。撮る画面（カメラの上）は、いまのまま。
  */
+/* ---- Q キットの部品の上書き（Q キットがそろえたら消す） ----
+ * 何もないときの知らせは左にそろえる。選んでいるチップは、色の面ではなく濃いふちと字で（色は送るボタンだけ）
+ */
+.ls-empty { justify-items: start; text-align: left; }
+.ls-chip[aria-pressed="true"]:not(.color), .ls-chip[aria-checked="true"]:not(.color), .ls-chip.is-active:not(.color), .ls-chip:has(input:checked):not(.color) { border-color: var(--ls-text); background: var(--ls-surface); color: var(--ls-text); }
+
 @media (prefers-color-scheme: dark) {
   :root[data-ls-dark="auto"] {
     --ink: #e9efe9;
