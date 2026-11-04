@@ -1,5 +1,5 @@
 // ろくが：覚えておくこと（state）。この端末の localStorage に残し、チーム名・色はさくせん盤と分けあう。
-// 読み込む順は index.html（page → store → draw → setup → studio → record → editor → render → app.js）。
+// 読み込む順は index.html（page → store → draw → setup → preview → studio → record → editor → editor-live → render → quickjoin → quickbadge → merge → keep → app.js）。
 "use strict";
 
 const STORE_KEY = "roqga:state";

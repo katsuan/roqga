@@ -1,5 +1,5 @@
 // ろくが：録画（保存の設定で、5分ごとに分けても録れる）と、保存の画面（見返し・保存・共有・次はどうする？）。
-// 読み込む順は index.html（page → store → draw → setup → studio → record → editor → render → app.js）。
+// 読み込む順は index.html（page → store → draw → setup → preview → studio → record → editor → editor-live → render → quickjoin → quickbadge → merge → keep → app.js）。
 "use strict";
 
 // ---- 録画 ----

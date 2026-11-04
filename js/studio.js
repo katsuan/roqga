@@ -1,5 +1,5 @@
 // ろくが：撮る画面（カメラ・映像を描く・倒して撮る・＋1 の位置・得点の ＋・−・⭐ ナイス）。
-// 読み込む順は index.html（page → store → draw → setup → studio → record → editor → render → app.js）。
+// 読み込む順は index.html（page → store → draw → setup → preview → studio → record → editor → editor-live → render → quickjoin → quickbadge → merge → keep → app.js）。
 "use strict";
 
 // ---- カメラ ----

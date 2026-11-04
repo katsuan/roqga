@@ -353,7 +353,7 @@
   <!-- 10秒もどる・進む（速く流して得点を通りすぎたとき）と、速さ（0.5×〜4× を少しずつ。書き出しはいつも 1×） -->
   <div class="editor-controls2">
     <button class="jump-btn" type="button" data-jump="-10" aria-label="10秒もどる">↺ 10秒</button>
-    <label class="rate-field"><span class="sr">再生の速さ</span><input id="editRate" type="range" min="0.5" max="4" step="0.25" value="1"><b id="editRateLabel">1×</b></label>
+    <label class="rate-field"><span class="ls-sr-only">再生の速さ</span><input id="editRate" type="range" min="0.5" max="4" step="0.25" value="1"><b id="editRateLabel">1×</b></label>
     <button class="jump-btn" type="button" data-jump="10" aria-label="10秒進む">10秒 ↻</button>
   </div>
   <!-- PC のショートカット（マウスで使う画面だけ出す） -->
@@ -463,9 +463,11 @@
 <script src="js/store.js?v=202610291807"></script>
 <script src="js/draw.js?v=202610291807"></script>
 <script src="js/setup.js?v=202610291807"></script>
+<script src="js/preview.js?v=202610291807"></script>
 <script src="js/studio.js?v=202610291807"></script>
 <script src="js/record.js?v=202610291807"></script>
 <script src="js/editor.js?v=202610291807"></script>
+<script src="js/editor-live.js?v=202610291807"></script>
 <script src="js/render.js?v=202610291807"></script>
 <script src="js/quickjoin.js?v=202610291807"></script>
 <script src="js/quickbadge.js?v=202610291807"></script>

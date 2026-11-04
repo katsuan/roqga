@@ -1,5 +1,5 @@
 // ろくが：書き出し（撮った動画に（得点板をつける）・⚡ ハイライトで共通）と、撮るときの ⚡ ハイライト。
-// 読み込む順は index.html（page → store → draw → setup → studio → record → editor → render → app.js）。
+// 読み込む順は index.html（page → store → draw → setup → preview → studio → record → editor → editor-live → render → quickjoin → quickbadge → merge → keep → app.js）。
 "use strict";
 
 // ---- 書き出し（共通）・⚡ ハイライト ----

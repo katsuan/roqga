@@ -3,7 +3,7 @@
 // 書き出し：mp4 の形式がそろっていれば、作り直さずに並べる（quickjoin.js。すぐ終わる。切るところはキーフレームにそろえる）。
 // 「1/3」の札は、札が出る最初だけ作りなおす（quickbadge.js）。
 // 柄を入れるとき・形式がちがうとき・すぐつなげなかったときは、撮った動画にと同じく流しながら録る（render.js の renderPieces。つないだ長さぶんかかる）。
-// 読み込む順は index.html（page → store → draw → setup → studio → record → editor → render → quickjoin → quickbadge → merge → keep → app.js）。
+// 読み込む順は index.html（page → store → draw → setup → preview → studio → record → editor → editor-live → render → quickjoin → quickbadge → merge → keep → app.js）。
 "use strict";
 
 const mergeItems = []; // 選んだ動画 [{ id, file, url, name, duration, mp4, keys }]（mp4：quickjoin.js で読んだ目次・keys：キーフレームの時刻。読めなければ null）
