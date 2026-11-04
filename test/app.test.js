@@ -324,3 +324,20 @@ test("🔗 つなぐ：すぐつなげなかった印は、動画を並べかえ
   run(`mergeQuickFailed = "badge"; mergeChanged();`);
   assert.equal(run("mergeQuickFailed"), null);
 });
+
+test("撮った動画に：−1 を続けても点は 0 より下にならず、その時間までの点を数える", () => {
+  const { run } = boot();
+  run(`editBase = { us: 1, them: 0 }; editEvents = [{ t: 3, key: "them", delta: -1 }, { t: 4, key: "us", delta: -1 }, { t: 4, key: "us", delta: -1 }, { t: 9, key: "them", delta: 1 }];`);
+  assert.deepEqual(JSON.parse(run("JSON.stringify(scoreAt(2))")), { us: 1, them: 0 });
+  assert.deepEqual(JSON.parse(run("JSON.stringify(scoreAt(5))")), { us: 0, them: 0 });
+  assert.deepEqual(JSON.parse(run("JSON.stringify(scoreAt(9))")), { us: 0, them: 1 });
+});
+
+test("保存の画面の「どれを残すか」：前の回は全部、今回の録画は 最初の5分・最後の5分・全部", () => {
+  const { run } = boot();
+  run(`clips = [{ take: 1 }, { take: 1 }, { take: 2 }, { take: 2 }, { take: 2 }]; take = 2;`);
+  const picked = (p) => JSON.parse(run(`pick = ${JSON.stringify(p)}; JSON.stringify(pickedIndexes())`));
+  assert.deepEqual(picked("all"), [0, 1, 2, 3, 4]);
+  assert.deepEqual(picked("first"), [0, 1, 2]);
+  assert.deepEqual(picked("last"), [0, 1, 4]);
+});
