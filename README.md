@@ -5,7 +5,7 @@
 公開URL: https://katsuan.github.io/score-recorder/
 
 
-はじめの画面の部品（見出しの行・使い方のタブ・チーム名の入力欄・プレビューの開閉・ボタン）は、おくるんの Q キット（`https://katsuan.github.io/line-share/shared/ui.css`。使い方はおくるんの README）。色と字は `style.css` の `:root`（`--ls-accent` など。ろくがの緑）。チームの色の丸と選べる色（チーム名の枠の中の丸と、その下の8色＋カスタムの1行。さくせん盤・アプリ版と同じ形）・エフェクトの小さなチップ・撮る画面・保存の画面は、ろくがにしかない見た目なので `style.css` のまま。
+はじめの画面の部品（見出しの行・使い方のタブ・チーム名の入力欄・プレビューの開閉・ボタン）は、おくるんの Q キット（`https://katsuan.github.io/oqrn/shared/ui.css`。使い方はおくるんの README）。色と字は `style.css` の `:root`（`--ls-accent` など。ろくがの緑）。チームの色の丸と選べる色（チーム名の枠の中の丸と、その下の8色＋カスタムの1行。さくせん盤・アプリ版と同じ形）・エフェクトの小さなチップ・撮る画面・保存の画面は、ろくがにしかない見た目なので `style.css` のまま。
 ## 使い方は2つ（はじめの画面の上のタブ）
 
 チーム名・色・プレビュー・スコアは2つで共通。
@@ -93,8 +93,8 @@
   - quickjoin.js・quickbadge.js・merge.js つなぐ ／ keep.js 録った動画をページが読みなおされても残す
 - js/core.js・js/main.js：前の名前のファイル。前の index.html を覚えているブラウザ（LINE の中など）のために、新しいファイル（page.js・store.js／app.js）を読むだけ。**2026-11-25 ごろに消す**
 - tools/icon.py：アイコン・ロゴ・OGP（おくるんの tools/brandkit.py を使う。さくせん盤と同じピッチの緑に、Q はカメラのレンズの輪と録画中の赤いランプ）。tools/logo_ro.py：横ロゴの「Ro」（R の足が o のボールを蹴る）
-- 公開は GitHub Actions（`.github/workflows/pages.yml`。中身は Q 共通の line-share の `q-pages.yml`）。push すると、テストと check-code が通ったときだけ Pages に出す。読みこむ JS・CSS の `?v=` は公開のときに付くので、手で付けなくてよい
-- おくるんの一覧（line-share の data/hub-links.json の `key: "roqga"`）に載っている。はじめの画面のいちばん下に「ろくがを紹介する」と仲間のアイコン列（line-share の shared/tool-share.js）
+- 公開は GitHub Actions（`.github/workflows/pages.yml`。中身は Q 共通の oqrn の `q-pages.yml`）。push すると、テストと check-code が通ったときだけ Pages に出す。読みこむ JS・CSS の `?v=` は公開のときに付くので、手で付けなくてよい
+- おくるんの一覧（oqrn の data/hub-links.json の `key: "roqga"`）に載っている。はじめの画面のいちばん下に「ろくがを紹介する」と仲間のアイコン列（oqrn の shared/tool-share.js）
 
 ## ローカルでの確認
 
