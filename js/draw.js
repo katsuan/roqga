@@ -261,7 +261,7 @@ function drawGoalFx(w, h, c = screenCtx) {
 // アプリ版（q-roqga-ios の TransitionRenderer）も同じ柄・同じ動きにそろえる
 const TRANSITION_SEC = 0.8;
 const TRANSITIONS = [
-  { id: "roqga", label: "RoQga", premium: false, draw: drawRoqgaWipe },
+  { id: "roqga", label: SERVICE_NAME.en, premium: false, draw: drawRoqgaWipe },
   { id: "none", label: "なし", premium: false, draw: null }
 ];
 // つなぎ目の柄を id から探す（ない・有料のものは、はじめの柄）

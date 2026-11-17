@@ -57,8 +57,8 @@
   <div class="teams">
     <div class="team-col" data-side="us">
       <label for="teamUs" data-side-label="us">左のチーム</label>
-      <div class="team-row">
-        <button class="color-dot" type="button" data-color-dot="us" aria-controls="colorPalette" aria-expanded="false"><span class="swatch"></span></button>
+      <div class="ls-pickfield">
+        <button class="ls-pickfield-btn" type="button" data-color-dot="us" aria-controls="colorPalette" aria-expanded="false"><span class="swatch"></span></button>
         <input id="teamUs" maxlength="12" placeholder="チーム名" autocomplete="off" enterkeyhint="done" data-side-name="us">
       </div>
       <div class="score-step" aria-label="左のチームの点" data-side-aria="us:の点">
@@ -75,8 +75,8 @@
     </div>
     <div class="team-col" data-side="them">
       <label for="teamThem" data-side-label="them">右のチーム</label>
-      <div class="team-row">
-        <button class="color-dot" type="button" data-color-dot="them" aria-controls="colorPalette" aria-expanded="false"><span class="swatch"></span></button>
+      <div class="ls-pickfield">
+        <button class="ls-pickfield-btn" type="button" data-color-dot="them" aria-controls="colorPalette" aria-expanded="false"><span class="swatch"></span></button>
         <input id="teamThem" maxlength="12" placeholder="チーム名" autocomplete="off" enterkeyhint="done" data-side-name="them">
       </div>
       <div class="score-step" aria-label="右のチームの点" data-side-aria="them:の点">
@@ -86,7 +86,7 @@
       </div>
     </div>
     <!-- 選べる色（開いているチームの1つだけ。中身は setup.js の renderTeamColors） -->
-    <div id="colorPalette" class="color-palette" role="group" hidden></div>
+    <div id="colorPalette" class="ls-picker" role="group" style="--cols: 9" hidden></div>
   </div>
   <!-- スコアを変える：試合の途中から撮るときに、いまの点を入れておく（各チームの下に − ＋ が出る）。
        0 - 0 にするは、点があるときだけ（次の試合の前に） -->
@@ -252,7 +252,7 @@
     <button class="minus" type="button" data-score="them" data-delta="-1" aria-label="右のチームの1点をへらす" data-side-aria="them:の1点をへらす">−1</button>
   </div>
   <!-- ⭐ ナイスプレー（おしい・いいプレーなど。録画前から出しておき、効くのは録画中）。点は変えずに、その時間を得点ハイライトに入れる -->
-  <button id="markLive" class="mark-btn" type="button" aria-label="ナイスプレー（ハイライトに入れる）">⭐ ナイス</button>
+  <button id="markLive" class="mark-btn" type="button" aria-label="ナイスプレー（ハイライトに入れる）"><span class="ls-icon is-text" data-icon="star" aria-hidden="true"></span>ナイス</button>
   <!-- 録画ボタン：まんなかのときは下のまんなか（＋1／−1 はその左右）。左よせ・右よせのときは、親指から遠い反対側のはしへ（押しまちがい防止） -->
   <div class="bar">
     <button id="record" class="record" type="button" aria-label="録画をはじめる"><span></span></button>
@@ -362,7 +362,7 @@
   <!-- 点が入ったところで ＋1（左右は得点板と同じ並び。ボタンはチームの色）。まちがえたら −1 か、下の一覧の ✕ -->
   <div id="editSides" class="edit-score"></div>
   <!-- ⭐ ナイスプレー（おしい・いいプレーなど）：点は変えずに、その時間をハイライトに入れる -->
-  <button id="editMark" class="mark-wide" type="button">⭐ ナイスプレー（おしい場面も）</button>
+  <button id="editMark" class="mark-wide" type="button"><span class="ls-icon is-text" data-icon="star" aria-hidden="true"></span>ナイスプレー（おしい場面も）</button>
   <ol id="editEvents" class="edit-events"></ol>
   <!-- 得点のエフェクト：はじめの画面と同じ設定（出さない／出す／▶ 試す・アイコン・文字）。中身ははじめの画面の #fxControls を開いているあいだだけ移す -->
   <details id="editFxFold" class="edit-fx">

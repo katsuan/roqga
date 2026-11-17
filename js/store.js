@@ -140,7 +140,7 @@ function takeMatchParam() {
 async function takeMatch(m) {
   const same = state.teamUs === m.teamUs && state.teamThem === m.teamThem;
   if (!same && (state.teamUs || state.teamThem)) {
-    const ok = await LineShareUI.ask({ title: "くみあわせの試合を入れますか？", text: `${m.teamUs || "左のチーム"} 対 ${m.teamThem || "右のチーム"}。いまのチーム名・色・点は置きかわります。`, ok: "入れる" });
+    const ok = await LineShareUI.ask({ title: `${Q_NAMES.qumiawase.name}の試合を入れますか？`, text: `${m.teamUs || "左のチーム"} 対 ${m.teamThem || "右のチーム"}。いまのチーム名・色・点は置きかわります。`, ok: "入れる" });
     if (!ok) return;
   }
   const before = { teamUs: state.teamUs, teamThem: state.teamThem, colorUs: state.colorUs, colorThem: state.colorThem, us: state.us, them: state.them, swapped: state.swapped };
@@ -159,7 +159,7 @@ async function takeMatch(m) {
   if (m.colorThem) state.colorThem = m.colorThem;
   if (!same) Object.assign(state, { us: 0, them: 0 });
   show();
-  LineShareUI.toast("くみあわせの試合を入れました", {
+  LineShareUI.toast(`${Q_NAMES.qumiawase.name}の試合を入れました`, {
     actionLabel: "元に戻す",
     onAction: () => {
       Object.assign(state, before);

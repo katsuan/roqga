@@ -25,6 +25,16 @@
 // （ほかのファイルの関数を使うので、全部読んでから）。
 "use strict";
 
+// 表示に出すサービスの名前（自分と Q のなかま）。画面の文に名前を直書きせず、ここから読む（q-oqrn の docs/structure.md「表示に出すサービスの名前」）。
+// なかまの名前の正本は q-oqrn の data/hub-links.json（テストが見比べ、かたまりの外の直書きも見つける）
+// <service-names>
+const SERVICE_NAME = { name: "ろくが", en: "RoQga" };
+const Q_NAMES = {
+  saqsen: { name: "さくせん盤", en: "SAQSEN" },
+  qumiawase: { name: "くみあわせ", en: "QumiAwase" }
+};
+// </service-names>
+
 // id から画面の部品を返す
 const $ = (id) => document.getElementById(id);
 // Q キットの線アイコン（<span class="ls-icon" data-icon="…">）を作る。CSS だけで出るので、Q キットの ui.js を待たなくてよい。

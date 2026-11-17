@@ -46,10 +46,13 @@ function drawPreview() {
   if ((goalFx || niceFx) && $("studio").hidden) previewLoop = requestAnimationFrame(drawPreview);
 }
 
-// 撮る画面の見本：録画中の赤い枠・時間、右上の ●●●、＋1／−1・⭐ ナイス・録画ボタン（＋1 の位置の設定どおり。撮る画面の style.css と同じ並び）
+// 線の星（Q キットの shared/icons/star.svg と同じ形。24×24 の中に描く）
+const STAR_PATH = "M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z";
+
+// 撮る画面の見本：録画中の赤い枠・時間、右上の ●●●、＋1／−1・ナイス・録画ボタン（＋1 の位置の設定どおり。撮る画面の style.css と同じ並び）
 function drawStudioMock(c, w, h) {
   const k = h / 390; // スマホを横にしたときの高さ（390）で 1
-  const font = (size) => `800 ${size * k}px "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif`;
+  const font = (size) => `700 ${size * k}px "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif`;
   // 丸いボタン（ふちつき）
   const circle = (x, y, r, fill, stroke, lw) => {
     c.beginPath();
@@ -109,10 +112,27 @@ function drawStudioMock(c, w, h) {
     pill(x, y, 52 * k, 32 * k, "rgba(0, 0, 0, 0.45)", color, 2 * k);
     text("−1", x, y, 14, "#ffffff");
   };
-  // ⭐ ナイス
+  // ナイス（撮る画面のボタンと同じ、線の星＋「ナイス」。星は Q キットの star の線。Path2D がないときは文字だけ）
   const nice = (x, y) => {
     pill(x, y, 96 * k, 40 * k, "rgba(0, 0, 0, 0.55)", "#ffd64a", 2 * k);
-    text("⭐ ナイス", x, y, 14, "#ffe082");
+    if (typeof Path2D !== "function") return text("ナイス", x, y, 14, "#ffe082");
+    c.font = font(14);
+    const s = 14 * k; // 星は字と同じ 1em、字との間は 4（Q キットの is-text）
+    const w = s + 4 * k + c.measureText("ナイス").width;
+    const left = x - w / 2;
+    c.save();
+    c.translate(left, y - s / 2);
+    c.scale(s / 24, s / 24);
+    c.strokeStyle = "#ffe082";
+    c.lineWidth = 2;
+    c.lineJoin = "round";
+    c.stroke(new Path2D(STAR_PATH));
+    c.restore();
+    c.font = font(14);
+    c.fillStyle = "#ffe082";
+    c.textAlign = "left";
+    c.textBaseline = "middle";
+    c.fillText("ナイス", left + s + 4 * k, y);
   };
   // 録画ボタン（録画中は角の丸い四角）
   const rec = (x, y) => {

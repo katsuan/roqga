@@ -1,21 +1,18 @@
 /* ろくが（RoQga）。色・サイズは :root でまとめて変える */
 :root {
   --accent: #2e8b4a; /* さくせん盤と同じピッチの緑（録画のボタン・ランプは赤のまま） */
-  --ink: #23302a;
-  --ink-soft: #5c6b62;
-  --border: #dbe7df;
-  --card: #ffffff;
   --font: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", system-ui, sans-serif;
 
-  /* Q キット（はじめの画面の見出し・タブ・入力欄・開閉・ボタン）の色と字を、ろくがの緑と丸ゴシックに */
+  /* Q キット（はじめの画面の見出し・タブ・入力欄・開閉・ボタン）の色と字を、ろくがの緑と丸ゴシックに。
+     字・ふち・地はろくがの CSS でも --ls-text・--ls-subtext・--ls-line・--ls-surface を使う（暗い表示は Q キットが変える） */
   --ls-accent: #2e8b4a;
   --ls-accent-strong: #26743d;
   --ls-accent-soft: #e6f4ea;
   --ls-accent-ink: #1f6b38;
   --ls-bg: #f4f7f5;
-  --ls-text: var(--ink);
-  --ls-subtext: var(--ink-soft);
-  --ls-line: var(--border);
+  --ls-text: #23302a;
+  --ls-subtext: #5c6b62;
+  --ls-line: #dbe7df;
   --ls-line-strong: #c9d4cd;
   --ls-font: var(--font);
   --ls-tabs-bg: #e6eee8;
@@ -25,17 +22,17 @@
 html, body { height: 100%; }
 /* iPhone・LINE の中のブラウザで、キーボードが出て画面がずれたとき、ページの外（黒）が見えないよう、ページそのものにも背景の色 */
 html { background-color: var(--ls-bg); }
-body { font-family: var(--font); color: var(--ink); background: var(--ls-bg); -webkit-tap-highlight-color: transparent; }
+body { font-family: var(--font); color: var(--ls-text); background: var(--ls-bg); -webkit-tap-highlight-color: transparent; }
 [hidden] { display: none !important; }
-input { width: 100%; min-height: 44px; padding: 8px 16px; border: 2px solid var(--border); border-radius: 12px; background: var(--card); font: inherit; font-size: 16px; }
+input { width: 100%; min-height: 44px; padding: 8px 16px; border: 1px solid var(--ls-line-strong); border-radius: var(--ls-radius-md); background: var(--ls-surface); font: inherit; font-size: 16px; }
 input[type="color"] { width: 40px; padding: 4px; }
-label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(--ink-soft); }
+label { display: grid; gap: 4px; font-size: 13px; font-weight: 700; color: var(--ls-subtext); }
 
 /* はじめの画面 */
 .setup { display: grid; gap: 16px; max-width: 520px; margin: 0 auto; padding: 24px 16px 48px; }
 /* 見出しの行は Q キット（ls-brand）。アイコンの角だけ丸く、ひとことはうすい字（色はカメラのボタンだけ） */
 .ls-brand-icon { width: 28px; height: 28px; border-radius: 7px; }
-.ls-brand-copy { margin-top: -8px; color: var(--ink-soft); font-size: 13px; font-weight: 600; }
+.ls-brand-copy { margin-top: -8px; color: var(--ls-subtext); font-size: 13px; font-weight: 600; }
 /* チームは左右に（左のチーム・右のチーム。得点板と同じ並び） */
 .teams { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; }
 .teams .team-col[data-side="us"] { order: 1; }
@@ -44,9 +41,9 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 /* 左右を入れかえたとき：them が左、us が右（ラベルは app.js で「左のチーム・右のチーム」に） */
 .teams.is-swapped .team-col[data-side="us"] { order: 3; }
 .teams.is-swapped .team-col[data-side="them"] { order: 1; }
-.mid { display: grid; grid-template-rows: 18px 44px; align-content: start; gap: 8px; justify-items: center; align-items: center; } /* 1段目はラベルの高さ（⇄）、2段目はチーム名の高さ（スコア） */
-.mid-score { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.swap { width: 30px; height: 30px; padding: 0; border: 2px solid var(--border); border-radius: 50%; background: var(--card); color: var(--ink); font: inherit; font-size: 14px; font-weight: 800; line-height: 1; cursor: pointer; position: relative; }
+.mid { display: grid; grid-template-rows: 18px 48px; align-content: start; gap: 8px; justify-items: center; align-items: center; } /* 1段目はラベルの高さ（⇄）、2段目はチーム名の高さ（スコア） */
+.mid-score { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.swap { width: 30px; height: 30px; padding: 0; border: 1px solid var(--ls-line-strong); border-radius: 50%; background: var(--ls-surface); color: var(--ls-text); font: inherit; font-size: 14px; font-weight: 700; line-height: 1; cursor: pointer; position: relative; }
 .swap:active { transform: scale(0.94); }
 /* 見た目は 30px の丸のまま、押せるところは 44px に */
 .swap::after { content: ""; position: absolute; inset: -7px; }
@@ -54,12 +51,12 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 /* たたんだ欄（プレビュー・GOAL のエフェクト） */
 /* プレビューの開閉は Q キット（ls-fold）。見出しの右に、エフェクトが ON かどうか */
 .fold-title { flex: 1; min-width: 0; }
-.meta { white-space: nowrap; font-size: 12px; font-weight: 800; color: var(--ink-soft); }
+.meta { white-space: nowrap; font-size: 12px; font-weight: 700; color: var(--ls-subtext); }
 .meta:empty { display: none; }
 .team-col { display: grid; gap: 8px; align-content: start; }
 /* 得点板のプレビュー（動画と同じ 16:9） */
 .preview-frame { position: relative; }
-.preview-tabs .chip[aria-selected="true"] { border-color: var(--ink); color: var(--ink); }
+.preview-tabs .chip[aria-selected="true"] { border-color: var(--ls-text); color: var(--ls-text); }
 .preview-caption { min-height: 1.6em; margin: 0; }
 .preview-frame.is-shoot .preview-tag { display: none; }
 /* 見本の ●●●（右上。見本の絵の上から 9%・右から 5% がまん中）に重ねた透明なボタン。保存される動画の見本では出さない */
@@ -68,52 +65,43 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 /* 見た目は小さな ●●● の丸のまま、まわりの透明なところも押せるように（44px めやす。ux.md の C3） */
 .preview-hand::after { content: ""; position: absolute; inset: -12px; border-radius: 50%; }
 .preview-frame:not(.is-shoot) .preview-hand { display: none; }
-.preview { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; background: #2e8b4a; }
+.preview { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--ls-radius-md); background: #2e8b4a; }
 /* 「プレビュー」の札（画面の上だけ。動画には入らない） */
-.preview-tag { --ink: #23302a; --ink-soft: #5c6b62; position: absolute; right: 8px; bottom: 8px; padding: 4px 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.9); color: var(--ink); font-size: 11px; font-weight: 800; letter-spacing: 0.08em; }
-/* チーム名の枠の中の左に色の丸 [● チーム名]。丸を押す・名前を入れているあいだは、下に横いっぱいの1行で選べる色（8色＋カスタム）。
+.preview-tag { --ls-text: #23302a; --ls-subtext: #5c6b62; position: absolute; right: 8px; bottom: 8px; padding: 4px 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.9); color: var(--ls-text); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; }
+/* チーム名の枠の中の左に色の丸 [● チーム名]（Q キットの ls-pickfield）。丸を押す・名前を入れているあいだは、下に横いっぱいの1行で選べる色（ls-picker。8色＋カスタム）。
    上のしっぽが、そのチームの丸を指す（--tail-x は setup.js）。さくせん盤・アプリ版と同じ形 */
-.team-row { display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: stretch; gap: 4px; padding: 0 8px 0 4px; border: 2px solid var(--border); border-radius: 12px; background: var(--card); }
-.team-row.is-open, .team-row:has(input:focus) { border-color: var(--accent); }
-.team-row input { min-width: 0; padding: 8px 0; border: 0; border-radius: 0; background: transparent; color: var(--ink); -webkit-appearance: none; appearance: none; }
-.team-row input:focus { outline: none; }
+.teams > .ls-picker { order: 4; grid-column: 1 / -1; }
 /* 320px ほどの幅：丸と右の余白を少しつめて、「チーム名」が切れないように */
 @media (max-width: 340px) {
-  .team-row { grid-template-columns: 28px minmax(0, 1fr); gap: 4px; padding-right: 4px; }
+  .teams .ls-pickfield { grid-template-columns: 28px minmax(0, 1fr); gap: 4px; padding-right: 4px; }
 }
-.color-dot { display: grid; place-items: center; min-height: 44px; padding: 0; border: 0; background: none; cursor: pointer; -webkit-appearance: none; appearance: none; }
-.color-dot .swatch { width: 24px; height: 24px; }
-.color-dot.is-open .swatch { box-shadow: 0 0 0 3px var(--card), 0 0 0 5px var(--accent); } /* 開いている丸は緑のふち */
+.ls-pickfield-btn .swatch { width: 24px; height: 24px; }
 .swatch { position: relative; display: block; width: 26px; height: 26px; border: 2px solid var(--ls-line-strong); border-radius: 50%; }
 /* もう片方のチームと同じ色：選べるが見分けにくいので、少し薄くして斜めの線（白でも分かるように） */
 .swatch.is-taken { opacity: 0.6; }
 .swatch.is-taken::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(to top right, transparent calc(50% - 1px), #7d8a82 calc(50% - 1px), #7d8a82 calc(50% + 1px), transparent calc(50% + 1px)); pointer-events: none; }
-/* カスタム：虹色の輪（選んでいる間は、まんなかをその色で塗る） */
-.swatch.is-custom { overflow: hidden; border: 0; background: radial-gradient(circle, var(--c, transparent) 52%, transparent 53%), conic-gradient(#e5484d, #f5a524, #30a46c, #3e7bfa, #6c47ff, #e5484d); }
-.swatch.is-custom input { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; padding: 0; border: 0; opacity: 0; cursor: pointer; -webkit-appearance: none; appearance: none; }
-.color-palette { position: relative; order: 4; grid-column: 1 / -1; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); margin-top: 4px; padding: 4px; border-radius: 12px; background: var(--ls-accent-soft); --tail-x: 21px; }
-.color-palette[hidden] { display: none; }
-.color-palette::before { content: ""; position: absolute; top: -8px; left: calc(var(--tail-x) - 9px); border: 9px solid transparent; border-top: 0; border-bottom: 8px solid var(--ls-accent-soft); }
-.palette-item { display: grid; place-items: center; min-width: 0; min-height: 36px; padding: 0; border: 0; background: none; cursor: pointer; -webkit-appearance: none; appearance: none; }
-.palette-item .swatch { width: min(26px, calc(100% - 8px)); height: auto; aspect-ratio: 1; }
-.palette-item[aria-pressed="true"] .swatch { box-shadow: 0 0 0 2px var(--ls-accent-soft), 0 0 0 4px var(--accent); }
+.ls-picker-item .swatch, .ls-picker-item .ls-swatch { width: min(26px, calc(100% - 8px)); height: auto; aspect-ratio: 1; }
+/* カスタム：Q キットの ls-swatch is-custom（パレットの線アイコン。選んでいる間はその色）。ふちはほかの丸と同じ。色の入力は丸の中に隠す（Q キット） */
+.ls-picker-item .ls-swatch.is-custom { border: 2px solid var(--ls-line-strong); box-shadow: none; }
+.ls-picker-item .ls-swatch.is-custom::before { width: 16px; height: 16px; }
+.ls-picker-item .ls-swatch.is-custom input { width: 100%; min-height: 0; padding: 0; }
 /* ボタンは Q キット（ls-button）。押しやすいよう大きめ */
-.ls-button.is-block { min-height: 52px; font-size: 17px; font-weight: 800; }
-.mid-score { cursor: pointer; border-radius: 8px; padding: 0 4px; }
+.ls-button.is-block { min-height: 52px; font-size: 17px; font-weight: 700; }
+.mid-score { cursor: pointer; border-radius: var(--ls-radius-sm); padding: 0 4px; }
 .mid-score:hover { background: rgba(0, 0, 0, 0.05); }
 /* キーボードで選んだときだけ、枠でわかるように（指で押したときは出ない） */
 .mid-score:focus-visible { background: rgba(0, 0, 0, 0.05); outline: 2px solid currentColor; outline-offset: 2px; }
 /* スコアを変えるとき：各チームの下に − 点 ＋ */
 .score-step { display: none; grid-template-columns: 40px minmax(0, 1fr) 40px; align-items: center; gap: 4px; }
 .teams.is-editing .score-step { display: grid; }
-.score-step b { text-align: center; font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
-.score-step button { height: 40px; border: 2px solid var(--border); border-radius: 10px; background: var(--card); color: var(--ink); font: inherit; font-size: 18px; font-weight: 800; cursor: pointer; }
+.score-step b { text-align: center; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.score-step button { height: 40px; border: 1px solid var(--ls-line-strong); border-radius: var(--ls-radius-sm); background: var(--ls-surface); color: var(--ls-text); font: inherit; font-size: 18px; font-weight: 700; cursor: pointer; }
 .score-step button:active { transform: scale(0.94); }
 .score-edit { margin-top: -16px; margin-bottom: -8px; display: flex; justify-content: flex-start; gap: 16px; flex-wrap: wrap; }
 .score-edit .link { min-height: 44px; padding: 0 8px; } /* 押せるところは 44px（見た目の間は前と同じ） */
-.hint { font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+.hint { font-size: 12px; color: var(--ls-subtext); line-height: 1.6; }
 .error { color: #c2410c; font-size: 13px; font-weight: 700; }
-.link { border: 0; background: none; color: var(--ink-soft); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
+.link { border: 0; background: none; color: var(--ls-subtext); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; }
 
 /* 撮る画面：画面いっぱいに、カメラ＋得点板の絵（録画されるもの）。その上にボタン */
 .studio { position: fixed; inset: 0; background: #000; overflow: hidden; touch-action: manipulation; user-select: none; -webkit-user-select: none; --side-gap: 64px; --anchor: 50%; --side-bottom: calc(16px + env(safe-area-inset-bottom)); --stack-pad: calc(20px + max(env(safe-area-inset-left), env(safe-area-inset-right))); --rec-pad: calc(24px + max(env(safe-area-inset-left), env(safe-area-inset-right))); }
@@ -133,7 +121,7 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .studio.hand-right .side .minus { order: -1; }
 .studio.hand-left:not(.is-swapped) .side.is-us, .studio.hand-right:not(.is-swapped) .side.is-us,
 .studio.hand-left.is-swapped .side.is-them, .studio.hand-right.is-swapped .side.is-them { bottom: calc(var(--side-bottom) + 92px); }
-.side button { border: 0; border-radius: 999px; font: inherit; font-weight: 800; color: #fff; cursor: pointer; }
+.side button { border: 0; border-radius: 999px; font: inherit; font-weight: 700; color: #fff; cursor: pointer; }
 /* ＋1 はチームの色のボタン（色は app.js の showTeamColors。字は色の明るさで白か黒） */
 .side .plus { width: 76px; height: 76px; background: var(--team, rgba(0, 0, 0, 0.45)); color: var(--team-ink, #fff); border: 3px solid rgba(255, 255, 255, 0.9); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45); font-size: 22px; }
 .side .minus { width: 52px; height: 32px; background: rgba(0, 0, 0, 0.45); border: 2px solid var(--team, transparent); font-size: 14px; }
@@ -158,19 +146,19 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .hand-toggle { grid-auto-flow: column; gap: 4px; }
 .hand-toggle i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, 0.35); }
 .hand-toggle[data-hand="left"] i:nth-child(1), .hand-toggle[data-hand="center"] i:nth-child(2), .hand-toggle[data-hand="right"] i:nth-child(3) { background: #fff; }
-.small { padding: 8px 16px; border: 0; border-radius: 999px; background: rgba(0, 0, 0, 0.5); color: #fff; font: inherit; font-size: 13px; font-weight: 800; white-space: nowrap; cursor: pointer; }
+.small { padding: 8px 16px; border: 0; border-radius: 999px; background: rgba(0, 0, 0, 0.5); color: #fff; font: inherit; font-size: 13px; font-weight: 700; white-space: nowrap; cursor: pointer; }
 .record { position: relative; display: grid; place-items: center; width: 68px; height: 68px; border: 4px solid #fff; border-radius: 50%; background: rgba(0, 0, 0, 0.3); cursor: pointer; }
 .record span { width: 46px; height: 46px; border-radius: 50%; background: #e5484d; transition: all 0.2s; }
 .record.is-on span { width: 26px; height: 26px; border-radius: 6px; }
-.elapsed { position: absolute; left: 50%; top: calc(16px + env(safe-area-inset-top)); transform: translateX(-50%); padding: 4px 16px; border-radius: 999px; background: rgba(0, 0, 0, 0.45); white-space: nowrap; color: #fff; font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
+.elapsed { position: absolute; left: 50%; top: calc(16px + env(safe-area-inset-top)); transform: translateX(-50%); padding: 4px 16px; border-radius: 999px; background: rgba(0, 0, 0, 0.45); white-space: nowrap; color: #fff; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
 .elapsed:empty { display: none; }
 .elapsed:not(:empty)::before { content: "● "; color: #e5484d; }
 /* 縦向きのときは、横向きにしてもらう */
-.rotate { position: absolute; inset: 0; display: none; align-content: center; justify-items: center; gap: 16px; padding: 24px; background: rgba(0, 0, 0, 0.85); color: #fff; font-size: 18px; font-weight: 800; text-align: center; }
+.rotate { position: absolute; inset: 0; display: none; align-content: center; justify-items: center; gap: 16px; padding: 24px; background: rgba(0, 0, 0, 0.85); color: #fff; font-size: 18px; font-weight: 700; text-align: center; }
 @media (orientation: portrait) { .studio:not(.is-turned) .rotate { display: grid; } }
 .rotate-sub { max-width: 300px; font-size: 13px; font-weight: 700; opacity: 0.85; }
 .turn-choices { display: flex; gap: 16px; }
-.turn-btn { display: grid; justify-items: center; gap: 8px; padding: 16px 16px; border: 2px solid rgba(255, 255, 255, 0.7); border-radius: 16px; background: rgba(255, 255, 255, 0.08); color: #fff; font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }
+.turn-btn { display: grid; justify-items: center; gap: 8px; padding: 16px 16px; border: 2px solid rgba(255, 255, 255, 0.7); border-radius: var(--ls-radius-lg); background: rgba(255, 255, 255, 0.08); color: #fff; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
 /* 倒す向きの絵：横にしたスマホ */
 .phone { width: 44px; height: 24px; border: 3px solid #fff; border-radius: 6px; position: relative; margin: 8px 0; }
 .phone::after { content: ""; position: absolute; top: 50%; width: 3px; height: 8px; border-radius: 2px; background: #fff; transform: translateY(-50%); }
@@ -196,37 +184,37 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 /* 保存のシート */
 /* 画面いっぱいに出すもの（撮った動画に 30・保存の画面 32・書き出し中 33）は、Q キットの上に貼りつく切りかえの帯（.ls-tabs の 20）より上に出す */
 .sheet { position: fixed; inset: 0; z-index: 32; display: grid; place-items: center; padding: 16px; background: rgba(0, 0, 0, 0.6); }
-.sheet-card { display: grid; gap: 8px; width: min(560px, 100%); max-height: 100%; overflow-y: auto; padding: 16px; border-radius: 18px; background: var(--card); }
+.sheet-card { display: grid; gap: 8px; width: min(560px, 100%); max-height: 100%; overflow-y: auto; padding: 16px; border-radius: var(--ls-radius-lg); background: var(--ls-surface); }
 .sheet-main, .sheet-side { display: grid; align-content: start; gap: 8px; min-width: 0; }
-.sheet-title { font-weight: 800; }
+.sheet-title { font-weight: 700; }
 .next-shot { display: grid; gap: 8px; margin-top: 4px; }
-.next-title { font-size: 13px; font-weight: 800; color: var(--ink-soft); }
-.next-btn { display: grid; gap: 4px; padding: 8px 16px; border: 2px solid var(--border); border-radius: 14px; background: var(--card); color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+.next-title { font-size: 13px; font-weight: 700; color: var(--ls-subtext); }
+.next-btn { display: grid; gap: 4px; padding: 8px 16px; border: 1px solid var(--ls-line-strong); border-radius: var(--ls-radius-md); background: var(--ls-surface); color: var(--ls-text); font: inherit; text-align: left; cursor: pointer; }
 .next-btn b { font-size: 15px; }
-.next-btn span { font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+.next-btn span { font-size: 12px; font-weight: 700; color: var(--ls-subtext); }
 /* 共有のあとに目立たせる（うすい緑の地。字は地に合わせて濃く：暗い表示でも白い字のままにならないように） */
 .next-btn.is-suggest { border-color: var(--accent); background: #eef7f0; color: #1f3a28; }
 .next-btn.is-suggest span { color: #4b6455; }
 .next-btn:active { transform: scale(0.98); }
-.shared-note { color: var(--ink); font-weight: 800; }
-.playback { width: 100%; max-height: 50vh; border-radius: 10px; background: #000; }
+.shared-note { color: var(--ls-text); font-weight: 700; }
+.playback { width: 100%; max-height: 50vh; border-radius: var(--ls-radius-sm); background: #000; }
 
 /* LINE の5分に合わせた区切り方 */
 .split { display: grid; gap: 8px; }
-.split-label { font-size: 13px; font-weight: 800; color: var(--ink-soft); }
+.split-label { font-size: 13px; font-weight: 700; color: var(--ls-subtext); }
 .seg { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; }
-.chip { min-height: 40px; padding: 0 8px; border: 2px solid var(--border); border-radius: 999px; background: var(--card); color: var(--ink-soft); font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; }
+.chip { min-height: 40px; padding: 0 8px; border: 1px solid var(--ls-line-strong); border-radius: 999px; background: var(--ls-surface); color: var(--ls-subtext); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
 
-.chip[aria-checked="true"], .chip[aria-selected="true"] { border-color: var(--ink); color: var(--ink); }
+.chip[aria-checked="true"], .chip[aria-selected="true"] { border-color: var(--ls-text); color: var(--ls-text); }
 
 /* 録った動画の一覧（押すと見返し、1本ずつ保存・共有） */
 .clip-list { display: grid; gap: 8px; }
-.clip { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; align-items: center; gap: 8px; padding: 8px; border: 2px solid var(--border); border-radius: 12px; }
-.clip.is-current { border-color: var(--ink); }
+.clip { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; align-items: center; gap: 8px; padding: 8px; border: 1px solid var(--ls-line-strong); border-radius: var(--ls-radius-md); }
+.clip.is-current { border-color: var(--ls-text); }
 /* 色のついた行は、上で見ている動画（わかりにくかったので、ことばでも） */
-.clip.is-current .clip-play::before { content: "▶ 上で見ている動画"; display: block; margin-bottom: 4px; color: var(--ink-soft); font-size: 11px; }
-.clip-play { border: 0; background: none; color: var(--ink); font: inherit; font-size: 13px; font-weight: 800; text-align: left; cursor: pointer; }
-.clip-btn { display: grid; place-items: center; min-height: 36px; padding: 0 8px; border: 2px solid var(--border); border-radius: 999px; background: var(--card); color: var(--ink); font: inherit; font-size: 12px; font-weight: 800; text-decoration: none; cursor: pointer; }
+.clip.is-current .clip-play::before { content: "▶ 上で見ている動画"; display: block; margin-bottom: 4px; color: var(--ls-subtext); font-size: 11px; }
+.clip-play { border: 0; background: none; color: var(--ls-text); font: inherit; font-size: 13px; font-weight: 700; text-align: left; cursor: pointer; }
+.clip-btn { display: grid; place-items: center; min-height: 36px; padding: 0 8px; border: 1px solid var(--ls-line-strong); border-radius: 999px; background: var(--ls-surface); color: var(--ls-text); font: inherit; font-size: 12px; font-weight: 700; text-decoration: none; cursor: pointer; }
 
 /* ＋1／−1 を押したとき：押したボタンが一瞬光る（押せたことが分かるように。ボタンは動画に入らない） */
 .side button.is-hit { animation: hit 0.45s ease-out; }
@@ -240,7 +228,7 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 /* はじめの画面：「カメラを開く」は画面の下に固定（スクロールしなくても押せる） */
 #openCamera, #pickVideo { position: sticky; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 5; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); }
 /* 保存のしかたの案内 */
-.guide { --ink: #23302a; --ink-soft: #5c6b62; padding: 8px 16px; border-radius: 10px; background: #eef7f0; color: var(--ink); font-size: 13px; font-weight: 700; line-height: 1.5; }
+.guide { --ls-text: #23302a; --ls-subtext: #5c6b62; padding: 8px 16px; border-radius: var(--ls-radius-sm); background: #eef7f0; color: var(--ls-text); font-size: 13px; font-weight: 700; line-height: 1.5; }
 
 /* 使い方のタブ：撮る／あとから付ける */
 /* 使い方のタブは Q キット（ls-tabs）。2つを等分に。はじめの画面の中なので、上にはりつけない */
@@ -253,10 +241,10 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .editor-bar { grid-area: bar; }
 .editor-side { grid-area: side; display: grid; align-content: start; gap: 16px; min-height: 0; overflow-y: auto; padding-bottom: calc(24px + env(safe-area-inset-bottom)); -webkit-overflow-scrolling: touch; }
 .editor-bar { display: flex; align-items: center; gap: 8px; }
-.editor-title { font-weight: 800; }
+.editor-title { font-weight: 700; }
 /* 動画の枠：横はいっぱい、高さは動画の縦横比（--ar。動画を読んだら app.js で入れる）で決め、画面の半分まで。動画は枠の中にまるごと（はみ出さない） */
 /* 高さの上限（--stage-h）に当たったときは、横幅も縦横比（--arn）から決める（横だけ広がって、左右に黒い帯が出ないように） */
-.editor-stage { --stage-h: 46vh; grid-area: stage; justify-self: center; width: min(100%, calc(var(--stage-h) * var(--arn, 1.7778))); max-height: var(--stage-h); aspect-ratio: var(--ar, 16 / 9); border-radius: 12px; overflow: hidden; background: #000; }
+.editor-stage { --stage-h: 46vh; grid-area: stage; justify-self: center; width: min(100%, calc(var(--stage-h) * var(--arn, 1.7778))); max-height: var(--stage-h); aspect-ratio: var(--ar, 16 / 9); border-radius: var(--ls-radius-md); overflow: hidden; background: #000; }
 @supports (height: 1dvh) { .editor-stage { --stage-h: 46dvh; } }
 /* タブレットなど幅の広い縦の画面：横に伸ばしすぎず、まんなかに 720px の列で */
 @media (min-width: 760px) { .editor { padding-left: max(16px, calc((100vw - 720px) / 2)); padding-right: max(16px, calc((100vw - 720px) / 2)); } }
@@ -270,43 +258,43 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .seek-mark { position: absolute; top: 0; left: calc(8px + (100% - 16px) * var(--p)); transform: translateX(-50%); width: 20px; height: 18px; padding: 0; border: 0; background: none; font-size: 13px; line-height: 16px; cursor: pointer; }
 .seek-mark:focus-visible { outline: 2px solid #fff; border-radius: 4px; }
 .edit-seek { width: 100%; accent-color: #5cc27a; }
-.edit-time { font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.edit-time { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .edit-score { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .edit-side { display: grid; justify-items: center; gap: 8px; }
 .edit-side .name-row { display: flex; align-items: center; gap: 8px; max-width: 100%; }
 .edit-side .swatch { flex: 0 0 auto; width: 28px; min-height: 28px; height: 28px; padding: 0; border: 2px solid rgba(255, 255, 255, 0.85); border-radius: 50%; background: none; overflow: hidden; cursor: pointer; }
 .edit-side .swatch::-webkit-color-swatch-wrapper { padding: 0; }
 .edit-side .swatch::-webkit-color-swatch { border: 0; border-radius: 50%; }
-.edit-side .name { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 800; opacity: 0.85; }
-.edit-side .plus { width: 100%; min-height: 64px; border: 3px solid rgba(255, 255, 255, 0.9); border-radius: 16px; background: var(--team); color: var(--team-ink); font: inherit; font-size: 22px; font-weight: 800; cursor: pointer; }
-.edit-side .minus { min-width: 64px; min-height: 32px; border: 2px solid var(--team); border-radius: 999px; background: rgba(0, 0, 0, 0.4); color: #fff; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; }
+.edit-side .name { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 700; opacity: 0.85; }
+.edit-side .plus { width: 100%; min-height: 64px; border: 3px solid rgba(255, 255, 255, 0.9); border-radius: var(--ls-radius-lg); background: var(--team); color: var(--team-ink); font: inherit; font-size: 22px; font-weight: 700; cursor: pointer; }
+.edit-side .minus { min-width: 64px; min-height: 32px; border: 2px solid var(--team); border-radius: 999px; background: rgba(0, 0, 0, 0.4); color: #fff; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
 .edit-side button:active { transform: scale(0.96); }
 .edit-side.is-solo { grid-column: 1 / -1; } /* 得点板を出さないときの1つの GOAL */
 /* 得点の一覧（操作の欄といっしょに動く） */
 .edit-events { display: grid; align-content: start; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .edit-events:empty::before { content: "まだ得点はありません"; font-size: 13px; opacity: 0.7; }
-.edit-events li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 8px 8px; border-radius: 10px; background: rgba(255, 255, 255, 0.08); font-size: 13px; font-weight: 700; }
+.edit-events li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 8px 8px; border-radius: var(--ls-radius-sm); background: rgba(255, 255, 255, 0.08); font-size: 13px; font-weight: 700; }
 .edit-events .ev-dot { display: inline-block; width: 10px; height: 10px; margin-right: 8px; border-radius: 50%; border: 1px solid #fff; vertical-align: -1px; }
-.edit-events button { border: 0; border-radius: 999px; background: rgba(255, 255, 255, 0.16); color: #fff; font: inherit; font-size: 12px; font-weight: 800; padding: 4px 8px; cursor: pointer; }
+.edit-events button { border: 0; border-radius: 999px; background: rgba(255, 255, 255, 0.16); color: #fff; font: inherit; font-size: 12px; font-weight: 700; padding: 4px 8px; cursor: pointer; }
 .editor-hint { color: rgba(255, 255, 255, 0.7); }
 .export-overlay { position: fixed; inset: auto 0 0 0; z-index: 33; display: grid; gap: 8px; justify-items: center; padding: 20px 16px calc(24px + env(safe-area-inset-bottom)); background: rgba(10, 18, 13, 0.96); text-align: center; }
-.export-title { font-size: 18px; font-weight: 800; }
-.export-prog { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.export-title { font-size: 18px; font-weight: 700; }
+.export-prog { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .export-overlay .hint { color: rgba(255, 255, 255, 0.75); }
 .editor-controls2 { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px; }
-.jump-btn { min-height: 36px; padding: 0 16px; border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 999px; background: none; color: #fff; font: inherit; font-size: 13px; font-weight: 800; white-space: nowrap; cursor: pointer; }
+.jump-btn { min-height: 36px; padding: 0 16px; border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 999px; background: none; color: #fff; font: inherit; font-size: 13px; font-weight: 700; white-space: nowrap; cursor: pointer; }
 .jump-btn:active { transform: scale(0.96); }
 .rate-field { display: grid; grid-template-columns: minmax(0, 1fr) 3.2em; align-items: center; gap: 8px; }
 .rate-field input { width: 100%; min-height: 0; padding: 0; border: 0; background: none; accent-color: #ffd54a; }
 .rate-field b { color: #fff; font-size: 13px; font-variant-numeric: tabular-nums; text-align: right; }
 
 /* ⭐ ナイスプレー：録画前から出す（効くのは録画中）。まんなかのときは録画ボタンの上、寄せたときは縦2段の ＋1 の上 */
-.mark-btn { position: absolute; left: 50%; bottom: calc(var(--side-bottom) + 98px); translate: -50% 0; height: 40px; padding: 0 16px; border: 2px solid #ffd54a; border-radius: 999px; background: rgba(0, 0, 0, 0.55); color: #ffe082; font: inherit; font-size: 14px; font-weight: 800; white-space: nowrap; cursor: pointer; } /* 位置は translate で（transform は押したときに光らせる動き hit が使う） */
+.mark-btn { position: absolute; left: 50%; bottom: calc(var(--side-bottom) + 98px); translate: -50% 0; height: 40px; padding: 0 16px; border: 2px solid #ffd54a; border-radius: 999px; background: rgba(0, 0, 0, 0.55); color: #ffe082; font: inherit; font-size: 14px; font-weight: 700; white-space: nowrap; cursor: pointer; } /* 位置は translate で（transform は押したときに光らせる動き hit が使う） */
 .studio:not(.is-recording) .mark-btn { opacity: 0.6; } /* 録画前も出しておく（押すと「録画中に押してね」） */
 .studio.hand-left .mark-btn { left: var(--stack-pad); translate: none; bottom: calc(var(--side-bottom) + 184px); }
 .studio.hand-right .mark-btn { left: auto; right: var(--stack-pad); translate: none; bottom: calc(var(--side-bottom) + 184px); }
 .mark-btn.is-hit { animation: hit 0.45s ease-out; }
-.mark-wide { min-height: 40px; border: 2px dashed rgba(255, 213, 74, 0.8); border-radius: 12px; background: rgba(255, 213, 74, 0.12); color: #ffe082; font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }
+.mark-wide { min-height: 40px; border: 2px dashed rgba(255, 213, 74, 0.8); border-radius: var(--ls-radius-md); background: rgba(255, 213, 74, 0.12); color: #ffe082; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
 .mark-wide:active { transform: scale(0.98); }
 
 /* 横の画面（高さが低い）では、左に動画（高さいっぱい）、右に「戻る」と操作（右の欄の中だけ動く） */
@@ -316,7 +304,7 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 }
 
 /* ① 横向きにしての画面からも、はじめの画面へ */
-.rotate-home { margin-top: 8px; padding: 8px 16px; border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 999px; background: none; color: #fff; font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }
+.rotate-home { margin-top: 8px; padding: 8px 16px; border: 2px solid rgba(255, 255, 255, 0.6); border-radius: 999px; background: none; color: #fff; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
 /* ② 録画を止めたあと、横の画面（高さが低い）では、左に見返し・右に保存や次の行き先（右の欄の中だけ動く） */
 @media (orientation: landscape) and (max-height: 560px) {
   .sheet { padding: 8px calc(8px + env(safe-area-inset-right)) 8px calc(8px + env(safe-area-inset-left)); }
@@ -325,29 +313,29 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
   .sheet-side { min-height: 0; overflow-y: auto; padding-right: 4px; }
 }
 /* ④ はじめての方への案内（撮る画面の上。動画には入らない） */
-.studio-tip { --ink: #23302a; --ink-soft: #5c6b62; position: absolute; left: 50%; top: 50%; z-index: 6; transform: translate(-50%, -50%); width: min(420px, calc(100% - 32px)); max-height: calc(100% - 24px); overflow-y: auto; display: grid; gap: 8px; padding: 16px; border-radius: 16px; background: #fff; color: var(--ink); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+.studio-tip { --ls-text: #23302a; --ls-subtext: #5c6b62; position: absolute; left: 50%; top: 50%; z-index: 6; transform: translate(-50%, -50%); width: min(420px, calc(100% - 32px)); max-height: calc(100% - 24px); overflow-y: auto; display: grid; gap: 8px; padding: 16px; border-radius: var(--ls-radius-lg); background: #fff; color: var(--ls-text); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
 .studio-tip[hidden] { display: none; }
-.tip-title { font-weight: 800; }
+.tip-title { font-weight: 700; }
 .studio-tip ul { display: grid; gap: 8px; margin: 0; padding-left: 1.1em; font-size: 14px; line-height: 1.5; }
 /* ⑤ 左よせ・右よせ（縦2段）のときは、＋1 の上に小さくチーム名（色だけで見分けなくていいように） */
-.side-name { display: none; position: absolute; bottom: calc(100% + 2px); left: 0; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #fff; font-size: 12px; font-weight: 800; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); pointer-events: none; }
+.side-name { display: none; position: absolute; bottom: calc(100% + 2px); left: 0; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #fff; font-size: 12px; font-weight: 700; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); pointer-events: none; }
 .studio.hand-left .side-name, .studio.hand-right .side-name { display: block; }
 .studio.hand-right .side-name { left: auto; right: 0; text-align: right; }
 
 /* 撮った動画に：🎉 得点のエフェクト（たたんだ欄。中身ははじめの画面の設定を移して使うので、白い枠に入れる） */
-.edit-fx { padding: 8px 16px; border-radius: 14px; background: rgba(255, 255, 255, 0.08); }
-.edit-fx > summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer; font-size: 14px; font-weight: 800; list-style: none; }
+.edit-fx { padding: 8px 16px; border-radius: var(--ls-radius-md); background: rgba(255, 255, 255, 0.08); }
+.edit-fx > summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer; font-size: 14px; font-weight: 700; list-style: none; }
 .edit-fx > summary::-webkit-details-marker { display: none; }
 .edit-fx > summary::after { content: "▾"; opacity: 0.7; }
 .edit-fx[open] > summary::after { content: "▴"; }
 .edit-fx .meta { margin-left: auto; overflow: hidden; font-size: 12px; font-weight: 700; opacity: 0.75; text-overflow: ellipsis; white-space: nowrap; }
-.edit-fx-body { display: grid; gap: 8px; margin-top: 8px; padding: 16px; border-radius: 12px; background: var(--card); color: var(--ls-text, #1d2a22); }
+.edit-fx-body { display: grid; gap: 8px; margin-top: 8px; padding: 16px; border-radius: var(--ls-radius-md); background: var(--ls-surface); color: var(--ls-text, #1d2a22); }
 .edit-fx-body:empty { display: none; }
 .fx-controls { display: grid; gap: 8px; }
 
 /* 撮った動画に：チーム名をあとから入れる欄（色の丸の横）。16px より小さいと iPhone で画面が寄るので 16px */
 .edit-side .name-row { width: 100%; justify-content: center; }
-.edit-side .name-input { flex: 1 1 auto; width: 100%; min-width: 0; min-height: 34px; padding: 4px 8px; border: 0; border-bottom: 1.5px dashed rgba(255, 255, 255, 0.5); border-radius: 0; background: transparent; color: #fff; font: inherit; font-size: 16px; font-weight: 800; text-align: center; }
+.edit-side .name-input { flex: 1 1 auto; width: 100%; min-width: 0; min-height: 34px; padding: 4px 8px; border: 0; border-bottom: 1.5px dashed rgba(255, 255, 255, 0.5); border-radius: 0; background: transparent; color: #fff; font: inherit; font-size: 16px; font-weight: 700; text-align: center; }
 .edit-side .name-input::placeholder { color: rgba(255, 255, 255, 0.55); }
 .edit-side .name-input:focus { outline: none; border-bottom-color: #fff; }
 
@@ -355,14 +343,14 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 /* ⚡ ハイライトに入れる長さ：[− 10秒前 ＋] 〜 [− 6秒後 ＋]（撮った動画にの濃い地では白っぽく。is-light は明るい地） */
 .hl-range { display: grid; gap: 8px; }
 .hl-range[hidden] { display: none; }
-.hl-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-weight: 800; }
+.hl-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-weight: 700; }
 .hl-step { display: inline-grid; grid-template-columns: 34px auto 34px; align-items: center; border: 2px solid rgba(255, 255, 255, 0.35); border-radius: 999px; background: rgba(255, 255, 255, 0.08); }
 .hl-step b { min-width: 52px; text-align: center; font-size: 14px; font-variant-numeric: tabular-nums; }
-.hl-step button { height: 32px; padding: 0; border: 0; background: none; color: inherit; font: inherit; font-size: 16px; font-weight: 800; cursor: pointer; }
+.hl-step button { height: 32px; padding: 0; border: 0; background: none; color: inherit; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
 .hl-step button:disabled { opacity: 0.35; cursor: default; }
-.hl-range.is-light .hl-step { border-color: var(--border); background: var(--card); }
+.hl-range.is-light .hl-step { border-color: var(--ls-line); background: var(--ls-surface); }
 .hl-range.is-light .hl-step button { color: var(--accent); }
-.transition-row { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
+.transition-row { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
 .transition-row > span { flex: 0 0 auto; opacity: 0.85; }
 .transition-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .transition-chips .chip { min-height: 34px; padding: 0 16px; }
@@ -371,7 +359,7 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .transition-chips .chip:disabled { opacity: 0.45; }
 
 /* 書き出し中：書き出しているところ・しま模様のバー・画面のままで・プチ情報 */
-.export-peek { width: min(100%, 320px); height: auto; border-radius: 10px; background: #000; }
+.export-peek { width: min(100%, 320px); height: auto; border-radius: var(--ls-radius-sm); background: #000; }
 .export-bar { position: relative; width: min(100%, 420px); height: 10px; overflow: hidden; border-radius: 999px; background: rgba(255, 255, 255, 0.14); }
 .export-bar i { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: inherit; background: repeating-linear-gradient(-45deg, #5cc27a 0 10px, #47a865 10px 20px); background-size: 28px 28px; animation: export-stripes 0.8s linear infinite; transition: width 0.3s ease; }
 @keyframes export-stripes { to { background-position: 28px 0; } }
@@ -380,7 +368,7 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .export-stay small { max-width: 30em; color: rgba(255, 255, 255, 0.7); font-size: 12px; line-height: 1.5; }
 .stay-icon { font-size: 26px; animation: stay-pulse 1.6s ease-in-out infinite; }
 @keyframes stay-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.7; } }
-.export-away { max-width: 30em; margin: 0; padding: 8px 16px; border-radius: 10px; background: rgba(255, 196, 0, 0.16); color: #ffe08a; font-size: 13px; font-weight: 700; line-height: 1.5; }
+.export-away { max-width: 30em; margin: 0; padding: 8px 16px; border-radius: var(--ls-radius-sm); background: rgba(255, 196, 0, 0.16); color: #ffe08a; font-size: 13px; font-weight: 700; line-height: 1.5; }
 .export-tip { min-height: 3em; max-width: 30em; margin: 0; color: rgba(255, 255, 255, 0.85); font-size: 13px; line-height: 1.5; }
 .export-tip.is-in { animation: tip-in 0.5s ease-out; }
 @keyframes tip-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -393,7 +381,7 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 /* 書き出し中：動画の枠を、撮る画面の録画中と同じ赤い枠に。左上に「● 書き出し中」。保存の画面から作るときの小さな映しも同じ */
 .editor.is-exporting .editor-stage { position: relative; }
 .editor.is-exporting .editor-stage::after { content: ""; position: absolute; inset: 0; border: 4px solid #e5484d; border-radius: inherit; pointer-events: none; animation: rec-edge 2s ease-in-out infinite; }
-.editor.is-exporting .editor-stage::before { content: "● 書き出し中"; position: absolute; left: 10px; bottom: 10px; z-index: 1; padding: 4px 8px; border-radius: 999px; background: rgba(229, 72, 77, 0.92); color: #fff; font-size: 12px; font-weight: 800; pointer-events: none; }
+.editor.is-exporting .editor-stage::before { content: "● 書き出し中"; position: absolute; left: 10px; bottom: 10px; z-index: 1; padding: 4px 8px; border-radius: 999px; background: rgba(229, 72, 77, 0.92); color: #fff; font-size: 12px; font-weight: 700; pointer-events: none; }
 .export-peek { border: 3px solid #e5484d; animation: rec-edge 2s ease-in-out infinite; }
 
 /* 撮った動画に：キーボードが出ているあいだ（チーム名などを入れるとき）は、動画を小さくして入力欄が隠れないように */
@@ -401,9 +389,9 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .editor.is-typing { padding-top: 8px; }
 
 /* 何を書き出す？：できあがりで選ぶ3つ（アイコン・名前と説明・長さの目安） */
-.export-mode-title { margin: 4px 0 -4px; font-size: 14px; font-weight: 800; }
+.export-mode-title { margin: 4px 0 -4px; font-size: 14px; font-weight: 700; }
 .export-modes { display: grid; gap: 8px; }
-.export-modes button { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 8px; min-height: 54px; padding: 8px 16px; border: 2px solid rgba(255, 255, 255, 0.18); border-radius: 14px; background: rgba(255, 255, 255, 0.06); color: #fff; font: inherit; text-align: left; cursor: pointer; }
+.export-modes button { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 8px; min-height: 54px; padding: 8px 16px; border: 2px solid rgba(255, 255, 255, 0.18); border-radius: var(--ls-radius-md); background: rgba(255, 255, 255, 0.06); color: #fff; font: inherit; text-align: left; cursor: pointer; }
 .export-modes button[aria-checked="true"] { border-color: #5cc27a; background: rgba(92, 194, 122, 0.18); }
 .export-modes button:disabled { opacity: 0.4; cursor: default; }
 .em-icon { font-size: 22px; text-align: center; }
@@ -412,27 +400,17 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .em-text { display: grid; gap: 0; min-width: 0; }
 .em-text b { font-size: 15px; }
 .em-text small { overflow: hidden; color: rgba(255, 255, 255, 0.7); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
-.export-modes em { color: rgba(255, 255, 255, 0.85); font-size: 12px; font-style: normal; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.export-modes em { color: rgba(255, 255, 255, 0.85); font-size: 12px; font-style: normal; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .export-mode-hint { margin: -4px 0 0; color: rgba(255, 255, 255, 0.65); font-size: 12px; }
 
 /* ---- 暗い表示（index.html の data-ls-dark="auto"。Q キットの色は ui.css が暗くする） ----
  * はじめの画面・保存のシート・あとから入れる画面だけ。撮る画面（カメラの上）は、いまのまま。
  */
 @media (prefers-color-scheme: dark) {
-  :root[data-ls-dark="auto"] {
-    --ink: #e9efe9;
-    --ink-soft: #a9b8ae;
-    --border: rgba(255, 255, 255, 0.16);
-    --card: #1b211d;
-  }
-
   :root[data-ls-dark="auto"] .swatch { border-color: rgba(255, 255, 255, 0.3); }
   /* 暗い表示：目立たせるボタンは、暗い緑の地に明るい字 */
   :root[data-ls-dark="auto"] .next-btn.is-suggest { background: #1f3b29; color: #f1f7f2; }
   :root[data-ls-dark="auto"] .next-btn.is-suggest span { color: #b9d3c1; }
-  :root[data-ls-dark="auto"] .color-palette { --palette-bg: #24302a; background: var(--palette-bg); }
-  :root[data-ls-dark="auto"] .color-palette::before { border-bottom-color: var(--palette-bg); }
-  :root[data-ls-dark="auto"] .palette-item[aria-pressed="true"] .swatch { box-shadow: 0 0 0 2px var(--palette-bg), 0 0 0 4px var(--accent); }
 }
 
 /* ---- PC など、横も高さもある画面 ----
@@ -466,27 +444,27 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 
 /* ---- 撮った動画に：点の入れ方を選ぶ（見ながら記録／じっくり記録）と、見ながら記録のあいだ ---- */
 .edit-mode-pick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 8px; }
-.edit-mode-title { grid-column: 1 / -1; margin: 0; font-size: 15px; font-weight: 800; }
+.edit-mode-title { grid-column: 1 / -1; margin: 0; font-size: 15px; font-weight: 700; }
 /* 2枚のカードの段をそろえる（subgrid。使えないブラウザでは、それぞれの中で上から並ぶ） */
-.mode-card { display: grid; grid-row: span 8; grid-template-rows: subgrid; align-content: start; gap: 4px; padding: 16px 8px; border: 2px solid rgba(255, 255, 255, 0.35); border-radius: 16px; background: rgba(255, 255, 255, 0.06); color: #fff; font: inherit; text-align: left; cursor: pointer; }
+.mode-card { display: grid; grid-row: span 8; grid-template-rows: subgrid; align-content: start; gap: 4px; padding: 16px 8px; border: 2px solid rgba(255, 255, 255, 0.35); border-radius: var(--ls-radius-lg); background: rgba(255, 255, 255, 0.06); color: #fff; font: inherit; text-align: left; cursor: pointer; }
 .mode-card.is-primary { border-color: #5cc27a; background: rgba(92, 194, 122, 0.16); }
 .mode-card b { font-size: 15px; }
-.mode-card small { font-size: 12px; font-weight: 800; opacity: 0.75; }
+.mode-card small { font-size: 12px; font-weight: 700; opacity: 0.75; }
 .mode-card .pt { font-size: 12px; font-weight: 700; line-height: 1.45; }
-.mode-card .pt::before { display: inline-block; width: 1.3em; font-weight: 800; }
+.mode-card .pt::before { display: inline-block; width: 1.3em; font-weight: 700; }
 .mode-card .pt.is-good::before { content: "✓"; color: #5cc27a; }
 .mode-card .pt.is-bad { opacity: 0.75; }
 /* 段の中の補足（2行目に小さく。✓・✕ の幅だけ下げる） */
 .mode-card .pt-note { display: block; padding-left: 1.3em; font-style: normal; font-size: 11px; opacity: 0.8; }
 .mode-card .pt.is-bad::before { content: "✕"; color: #ff8a80; }
-.mode-card em { font-style: normal; font-size: 12px; font-weight: 800; color: #ffd54a; }
+.mode-card em { font-style: normal; font-size: 12px; font-weight: 700; color: #ffd54a; }
 /* 時間の補足（ハイライトを作るなら）：時間（黄色）と同じ系統のうすい黄色。「ハイライトを作るなら」で行を分ける */
 .mode-card em .pt-note { padding-left: 0; color: rgba(255, 213, 74, 0.72); opacity: 1; font-weight: 700; white-space: pre-line; }
 /* 選んでいるあいだは、ほかの操作を出さない */
 .editor.is-choosing .editor-side > :not(#editModePick), .editor.is-choosing #editTransport { display: none !important; }
 /* 見ながら記録のあいだ：速さ・10秒・位置を動かす・書き出しの欄は出さない（1倍で1回流しながら録るため） */
-.quick-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 16px; border: 2px solid #e5484d; border-radius: 14px; background: rgba(229, 72, 77, 0.12); }
-.quick-time { font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.quick-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 16px; border: 2px solid #e5484d; border-radius: var(--ls-radius-md); background: rgba(229, 72, 77, 0.12); }
+.quick-time { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .quick-time::before { content: "● "; color: #e5484d; }
 .editor.is-quick .editor-controls2, .editor.is-quick .key-hint, .editor.is-quick #editFxFold,
 .editor.is-quick .export-mode-title, .editor.is-quick .export-modes, .editor.is-quick #exportModeHint, .editor.is-quick [data-hl-range],
@@ -494,7 +472,7 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .editor.is-quick .edit-seek { pointer-events: none; }
 .editor.is-quick .seek-mark, .editor.is-quick .edit-events li > button:first-child { pointer-events: none; opacity: 0.6; }
 /* 見出しのよこの、いまの記録のしかた */
-.mode-chip { flex: 0 0 auto; margin-left: auto; padding: 4px 8px; border: 1.5px solid rgba(255, 255, 255, 0.45); border-radius: 999px; background: none; color: #fff; font: inherit; font-size: 12px; font-weight: 800; white-space: nowrap; cursor: pointer; }
+.mode-chip { flex: 0 0 auto; margin-left: auto; padding: 4px 8px; border: 1.5px solid rgba(255, 255, 255, 0.45); border-radius: 999px; background: none; color: #fff; font: inherit; font-size: 12px; font-weight: 700; white-space: nowrap; cursor: pointer; }
 .mode-chip.is-quick { border-color: #e5484d; background: rgba(229, 72, 77, 0.18); cursor: default; }
 
 /* ---- 🔗 つなぐ：選んだ動画の一覧・分け方・書き出す ---- */
@@ -502,11 +480,11 @@ label { display: grid; gap: 4px; font-size: 13px; font-weight: 800; color: var(-
 .merge-panel[hidden] { display: none; }
 .merge-lead { margin: 0; }
 .merge-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; counter-reset: merge; }
-.merge-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto auto; align-items: center; gap: 8px; padding: 8px 8px; border: 2px solid var(--border); border-radius: 12px; background: var(--card); counter-increment: merge; }
-.merge-item::before { content: counter(merge); min-width: 1.4em; font-weight: 800; color: var(--ink-soft); text-align: center; }
-.merge-name { min-width: 0; overflow: hidden; font-size: 13px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
-.merge-name small { display: block; font-size: 11px; font-weight: 700; color: var(--ink-soft); }
-.merge-item button { width: 36px; height: 36px; padding: 0; border: 2px solid var(--border); border-radius: 10px; background: var(--card); color: var(--ink); font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }
+.merge-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto auto; align-items: center; gap: 8px; padding: 8px 8px; border: 1px solid var(--ls-line-strong); border-radius: var(--ls-radius-md); background: var(--ls-surface); counter-increment: merge; }
+.merge-item::before { content: counter(merge); min-width: 1.4em; font-weight: 700; color: var(--ls-subtext); text-align: center; }
+.merge-name { min-width: 0; overflow: hidden; font-size: 13px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.merge-name small { display: block; font-size: 11px; font-weight: 700; color: var(--ls-subtext); }
+.merge-item button { width: 36px; height: 36px; padding: 0; border: 1px solid var(--ls-line-strong); border-radius: var(--ls-radius-sm); background: var(--ls-surface); color: var(--ls-text); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
 .merge-item button:disabled { opacity: 0.35; cursor: default; }
 .merge-plan:empty { display: none; }
 /* つなぐのあいだは、チーム・スコア・プレビュー・保存の設定を出さない（つなぐ動画には、もう得点板が入っている） */

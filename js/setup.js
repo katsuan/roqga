@@ -70,7 +70,7 @@ function renderTeamColors() {
     const open = colorOpen === key;
     dot.querySelector(".swatch").style.background = state[colorKeyOf(key)];
     dot.classList.toggle("is-open", open);
-    dot.closest(".team-row").classList.toggle("is-open", open); // 枠のふちを緑に
+    dot.closest(".ls-pickfield").classList.toggle("is-open", open); // 枠のふちを緑に（Q キットの ls-pickfield）
     dot.setAttribute("aria-expanded", String(open));
     dot.setAttribute("aria-label", `${sideName(key)}の色を選ぶ（いま：${teamColorName(state[colorKeyOf(key)])}）`);
   });
@@ -99,7 +99,7 @@ function paletteItems(key) {
   const swatch = (className) => Object.assign(document.createElement("span"), { className: `swatch${className ? ` ${className}` : ""}` });
   const buttons = TEAM_COLORS.map((c) => {
     const taken = c.hex === other;
-    const b = Object.assign(document.createElement("button"), { type: "button", className: "palette-item" });
+    const b = Object.assign(document.createElement("button"), { type: "button", className: "ls-picker-item" });
     b.setAttribute("aria-pressed", String(current === c.hex));
     b.setAttribute("aria-label", `${title}：${c.label}` + (taken ? "（もう片方のチームと同じ色）" : ""));
     const sw = swatch(taken ? "is-taken" : "");
@@ -109,11 +109,11 @@ function paletteItems(key) {
     b.addEventListener("click", () => pick(c.hex, true));
     return b;
   });
-  // カスタム：自由な色（虹色の輪。選んでいる間は、まんなかをその色で塗る）。選んでも開いたまま
-  const custom = Object.assign(document.createElement("label"), { className: "palette-item" });
+  // カスタム：自由な色（Q キットの ls-swatch is-custom。まだ選んでいないときはパレットの線アイコン、選んでいる間はその色で塗る）。選んでも開いたまま
+  const custom = Object.assign(document.createElement("label"), { className: "ls-picker-item" });
   custom.setAttribute("aria-pressed", String(!isPreset));
-  const sw = swatch("is-custom");
-  if (!isPreset) sw.style.setProperty("--c", current);
+  const sw = Object.assign(document.createElement("span"), { className: `ls-swatch is-custom${isPreset ? "" : " is-selected"}` });
+  if (!isPreset) sw.style.setProperty("--swatch", current);
   const input = Object.assign(document.createElement("input"), { type: "color", value: /^#[0-9a-f]{6}$/.test(current) ? current : "#ffffff" });
   input.setAttribute("aria-label", `${title}のカスタムの色`);
   input.addEventListener("change", () => pick(input.value, false));
